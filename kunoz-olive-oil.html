@@ -677,11 +677,11 @@
     </div>
     <div class="form-group">
       <label>الاسم الكامل</label>
-      <input type="text" id="fname" placeholder="محمد أحمد" required>
+      <input type="text" id="fname" placeholder="محمد أحمد" autocomplete="name" required>
     </div>
     <div class="form-group">
       <label>رقم الهاتف</label>
-      <input type="tel" id="fphone" placeholder="01xxxxxxxxx" required>
+      <input type="tel" id="fphone" placeholder="01xxxxxxxxx" inputmode="numeric" autocomplete="tel" maxlength="11" required>
     </div>
     <div class="form-group">
       <label>المحافظة</label>
@@ -823,6 +823,12 @@
       return;
     }
 
+    const phoneClean = phone.replace(/[^0-9]/g, '');
+    if (!/^01[0-2,5]\d{8}$/.test(phoneClean)) {
+      alert('من فضلك تأكد من رقم الهاتف (11 رقم، يبدأ بـ 010 أو 011 أو 012 أو 015)');
+      return;
+    }
+
     const btn = document.getElementById('submitBtn');
     btn.disabled = true; btn.textContent = 'جارٍ الإرسال...';
 
@@ -832,8 +838,9 @@
 
     try {
       await fetch(SHEET_URL, {
-        method: 'POST', mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify({
           timestamp: new Date().toLocaleString('ar-EG', { timeZone: 'Africa/Cairo' }),
           orderId,
