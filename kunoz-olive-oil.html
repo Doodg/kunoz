@@ -777,10 +777,22 @@
   orderObserver.observe(orderSection);
 
   const OFFERS = {
-    1: { name: 'عرض الزيت 500مل',          price: 180 },
-    2: { name: 'باكيج سيناء (زيت + عسل)', price: 450 }
+    1: { name: 'عرض الزيت 500مل',          price: 180, productType: 'زيت زيتون' },
+    2: { name: 'باكيج سيناء (زيت + عسل)', price: 450, productType: 'باكيج (زيت + عسل)' }
   };
   let currentOffer = 1;
+
+  // قراءة بيانات الإعلان (UTM) من الرابط
+  function getAdSource() {
+    const params = new URLSearchParams(window.location.search);
+    const utmId     = params.get('utm_id');
+    const utmSource = params.get('utm_source');
+    const utmCampaign = params.get('utm_campaign');
+    if (utmId || utmSource || utmCampaign) {
+      return [utmSource, utmCampaign, utmId].filter(Boolean).join(' | ');
+    }
+    return document.referrer || 'مباشر';
+  }
 
   function selectOffer(id) {
     currentOffer = id;
@@ -814,24 +826,25 @@
     const btn = document.getElementById('submitBtn');
     btn.disabled = true; btn.textContent = 'جارٍ الإرسال...';
 
-    const SHEET_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL';
+    const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwQUvlrFS3UZPyess2u6Ol9Ng1T9N-Vc3IuAhnSRwbyj7iNgNnCl5kZNkodnpIBgliPZw/exec';
+    const orderId = Math.floor(100000 + Math.random()*900000);
+    const total = qty * offer.price;
 
     try {
       await fetch(SHEET_URL, {
         method: 'POST', mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          timestamp: new Date().toLocaleString('ar-EG'),
-          name, phone, gov, address,
+          timestamp: new Date().toLocaleString('ar-EG', { timeZone: 'Africa/Cairo' }),
+          orderId,
+          productType: offer.productType,
           offer: offer.name, qty,
           unit_price: offer.price,
-          total: qty * offer.price,
-          payment,
-          source: document.referrer || 'direct'
+          total,
+          name, phone, gov, address, payment,
+          source: getAdSource()
         })
       });
-      const orderId = Math.floor(100000 + Math.random()*900000);
-      const total = qty * offer.price;
       const params = new URLSearchParams({
         id: orderId,
         offer: offer.name,
