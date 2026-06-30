@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>كنوز الفيروز – عسل حبة البركة الطبيعي من سيناء</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --black:    #0D0D0D;
+    --gold:     #C9A84C;
+    --gold-lt:  #E8C96A;
+    --olive:    #B8732E;
+    --olive-lt: #D38B3F;
+    --cream:    #F5F0E8;
+    --white:    #FFFFFF;
+    --red:      #C0392B;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Tajawal', sans-serif; background: var(--black); color: var(--cream); overflow-x: hidden; }
+  .page-content { padding-top: 0; transition: padding-top .4s ease; }
+
+  .top-fixed {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  }
+  nav {
+    width: 100%;
+    padding: 16px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(13,13,13,0.96); border-bottom: 1px solid rgba(201,168,76,0.15);
+  }
+  .nav-logo { font-size: 1.2rem; font-weight: 800; color: var(--gold); }
+  .nav-cta {
+    background: var(--gold); color: var(--black);
+    border: none; padding: 10px 22px; border-radius: 50px;
+    font-family: 'Tajawal', sans-serif; font-size: 0.9rem; font-weight: 700;
+    cursor: pointer; transition: background .3s;
+  }
+  .nav-cta:hover { background: var(--gold-lt); }
+
+  .urgency-bar {
+    background: linear-gradient(135deg, var(--red), #922B21);
+    padding: 11px 24px; text-align: center;
+    font-size: 0.92rem; font-weight: 700; color: var(--white);
+    transition: max-height .4s ease, opacity .4s ease, padding .4s ease;
+    overflow: hidden; max-height: 60px;
+  }
+  .urgency-bar.hidden { max-height: 0; opacity: 0; padding-top: 0; padding-bottom: 0; pointer-events: none; }
+  .urgency-bar span { color: #FFD700; }
+
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center; gap: 0;
+    padding-top: calc(var(--header-h, 110px) + 30px);
+    padding-left: 60px; padding-right: 60px; padding-bottom: 60px;
+    position: relative; overflow: hidden;
+    transition: padding-top .4s ease;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 70% 50%, rgba(74,114,64,0.12) 0%, transparent 70%);
+  }
+  .hero-content { position: relative; z-index: 1; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 50px; padding: 8px 18px;
+    font-size: 0.8rem; color: var(--gold); letter-spacing: 2px;
+    margin-bottom: 24px;
+    opacity: 0; animation: fadeUp .7s ease .3s forwards;
+  }
+  .hero h1 {
+    font-size: clamp(2.2rem, 5vw, 4rem); font-weight: 800; line-height: 1.2;
+    color: var(--white); margin-bottom: 16px;
+    opacity: 0; animation: fadeUp .7s ease .5s forwards;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero-sub {
+    font-size: 1.05rem; color: rgba(245,240,232,0.7); line-height: 1.8;
+    margin-bottom: 32px;
+    opacity: 0; animation: fadeUp .7s ease .7s forwards;
+  }
+  .hero-badges {
+    display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 36px;
+    opacity: 0; animation: fadeUp .7s ease .9s forwards;
+  }
+  .badge {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 50px; padding: 7px 16px; font-size: 0.82rem; color: rgba(245,240,232,0.8);
+  }
+  .hero-cta {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--olive), var(--olive-lt));
+    color: var(--white); border: none;
+    padding: 18px 48px; border-radius: 50px;
+    font-family: 'Tajawal', sans-serif; font-size: 1.1rem; font-weight: 800;
+    cursor: pointer; text-decoration: none;
+    box-shadow: 0 8px 32px rgba(61,94,53,0.5);
+    transition: transform .2s, box-shadow .2s;
+    opacity: 0; animation: fadeUp .7s ease 1.1s forwards;
+  }
+  .hero-cta:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(61,94,53,0.7); }
+  .hero-image {
+    position: relative; z-index: 1;
+    display: flex; justify-content: center; align-items: center;
+    opacity: 0; animation: fadeUp .7s ease .6s forwards;
+  }
+  .hero-image img {
+    width: 100%; max-width: 460px; border-radius: 24px;
+    object-fit: cover; aspect-ratio: 4/5;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(201,168,76,0.1);
+  }
+  .hero-float-badge {
+    position: absolute; bottom: 24px; right: 24px;
+    background: rgba(13,13,13,0.9); border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 16px; padding: 12px 18px;
+    font-size: 0.85rem; color: var(--gold); font-weight: 700;
+    backdrop-filter: blur(10px);
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .origin {
+    background: linear-gradient(135deg, var(--olive) 0%, #2A4525 100%);
+    padding: 70px 24px; text-align: center;
+  }
+  .origin h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 800; color: var(--white); margin-bottom: 12px; }
+  .origin p { font-size: 1rem; color: rgba(255,255,255,0.8); max-width: 540px; margin: 0 auto; line-height: 1.9; }
+
+  .prob-sol-wrap { padding: 90px 24px; background: rgba(255,255,255,0.01); }
+  .prob-sol {
+    max-width: 1000px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+  }
+  .prob-box, .sol-box { border-radius: 20px; padding: 36px 28px; }
+  .prob-box { background: rgba(192,57,43,0.08); border: 1px solid rgba(192,57,43,0.25); }
+  .sol-box  { background: rgba(61,94,53,0.1);  border: 1px solid rgba(61,94,53,0.35); }
+  .prob-box h3 { color: #E74C3C; font-size: 1.15rem; margin-bottom: 20px; }
+  .sol-box h3  { color: var(--gold-lt); font-size: 1.15rem; margin-bottom: 20px; }
+  .prob-box li, .sol-box li {
+    list-style: none; padding: 9px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    font-size: 0.9rem; color: rgba(245,240,232,0.75); line-height: 1.6;
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .prob-box li::before { content: 'x'; color: #E74C3C; font-weight: 700; flex-shrink: 0; }
+  .sol-box li::before  { content: 'v'; color: var(--gold); font-weight: 700; flex-shrink: 0; }
+
+  .section-eyebrow {
+    text-align: center; font-size: 0.72rem; letter-spacing: 4px;
+    color: var(--gold); text-transform: uppercase; margin-bottom: 12px;
+  }
+  .section-title {
+    text-align: center; font-size: clamp(1.7rem, 4vw, 2.8rem);
+    font-weight: 800; color: var(--white); margin-bottom: 56px;
+  }
+
+  .offers { padding: 90px 24px; background: rgba(255,255,255,0.015); }
+  .offers-grid {
+    max-width: 820px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;
+  }
+  .offer-card {
+    border-radius: 24px; padding: 36px 28px; position: relative;
+    border: 1px solid rgba(201,168,76,0.2);
+    background: rgba(255,255,255,0.03);
+    transition: transform .3s, border-color .3s;
+  }
+  .offer-card:hover { transform: translateY(-6px); border-color: rgba(201,168,76,0.5); }
+  .offer-card.featured {
+    border-color: var(--gold);
+    background: linear-gradient(135deg, rgba(201,168,76,0.07), rgba(61,94,53,0.07));
+  }
+  .offer-ribbon {
+    position: absolute; top: -12px; right: 24px;
+    background: var(--gold); color: var(--black);
+    font-size: 0.75rem; font-weight: 800; padding: 5px 14px; border-radius: 50px;
+  }
+  .offer-img {
+    width: 100%; border-radius: 14px; aspect-ratio: 4/3;
+    object-fit: cover; margin-bottom: 20px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .offer-tag { display: inline-block; font-size: 0.72rem; letter-spacing: 2px; color: var(--gold); margin-bottom: 8px; }
+  .offer-card h3 { font-size: 1.25rem; font-weight: 800; color: var(--white); margin-bottom: 6px; }
+  .offer-desc { font-size: 0.85rem; color: rgba(245,240,232,0.6); line-height: 1.7; margin-bottom: 20px; }
+  .offer-includes { list-style: none; margin-bottom: 24px; }
+  .offer-includes li {
+    font-size: 0.88rem; color: rgba(245,240,232,0.8);
+    padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex; gap: 8px;
+  }
+  .offer-includes li::before { content: 'o'; color: var(--gold); font-size: 0.6rem; margin-top: 4px; flex-shrink: 0; }
+  .offer-price-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }
+  .offer-price { font-size: 2rem; font-weight: 800; color: var(--gold); }
+  .offer-old   { font-size: 1rem; color: rgba(245,240,232,0.35); text-decoration: line-through; }
+  .offer-save  { font-size: 0.8rem; color: #E74C3C; font-weight: 700; margin-bottom: 20px; }
+  .offer-btn {
+    display: block; width: 100%; text-align: center;
+    background: linear-gradient(135deg, var(--gold), var(--gold-lt));
+    color: var(--black); border: none; padding: 16px;
+    border-radius: 50px; font-family: 'Tajawal', sans-serif;
+    font-size: 1rem; font-weight: 800; cursor: pointer; text-decoration: none;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 6px 24px rgba(201,168,76,0.25);
+  }
+  .offer-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(201,168,76,0.45); }
+  .offer-btn.green {
+    background: linear-gradient(135deg, var(--olive), var(--olive-lt));
+    color: var(--white); box-shadow: 0 6px 24px rgba(61,94,53,0.35);
+  }
+  .offer-btn.green:hover { box-shadow: 0 10px 32px rgba(61,94,53,0.55); }
+
+  .features { padding: 90px 24px; max-width: 1100px; margin: 0 auto; }
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+  .feat-card {
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(201,168,76,0.12);
+    border-radius: 18px; padding: 28px 22px;
+    transition: border-color .3s, transform .3s;
+  }
+  .feat-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-4px); }
+  .feat-icon { font-size: 2rem; margin-bottom: 12px; }
+  .feat-card h3 { font-size: 1rem; font-weight: 700; color: var(--gold); margin-bottom: 8px; }
+  .feat-card p  { font-size: 0.85rem; color: rgba(245,240,232,0.6); line-height: 1.8; }
+
+  .reviews { padding: 90px 24px; background: rgba(255,255,255,0.015); }
+  .reviews-grid {
+    max-width: 900px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;
+  }
+  .review-card {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 18px; padding: 28px 22px;
+  }
+  .stars { color: var(--gold); font-size: 1rem; margin-bottom: 12px; }
+  .review-text { font-size: 0.88rem; color: rgba(245,240,232,0.75); line-height: 1.8; margin-bottom: 16px; font-style: italic; }
+  .reviewer { display: flex; align-items: center; gap: 10px; }
+  .reviewer-avatar {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--olive), var(--gold));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; font-weight: 800; color: var(--white); flex-shrink: 0;
+  }
+  .reviewer-name { font-size: 0.88rem; font-weight: 700; color: var(--white); }
+  .reviewer-loc  { font-size: 0.75rem; color: rgba(245,240,232,0.4); }
+
+  /* GALLERY + UGC */
+  .gallery-section { padding: 90px 24px; }
+  .gallery-grid {
+    max-width: 1100px; margin: 0 auto 64px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px;
+  }
+  .gallery-item {
+    border-radius: 16px; overflow: hidden; aspect-ratio: 1;
+    border: 1px solid rgba(201,168,76,0.15);
+  }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
+  .gallery-item:hover img { transform: scale(1.06); }
+
+  .ugc-label {
+    text-align: center; font-size: 0.85rem; color: rgba(245,240,232,0.5);
+    margin-bottom: 24px;
+  }
+  .ugc-row {
+    display: flex; gap: 16px; overflow-x: auto; padding: 8px 24px 24px;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+  .ugc-row::-webkit-scrollbar { height: 6px; }
+  .ugc-row::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); border-radius: 10px; }
+  .ugc-card {
+    flex: 0 0 auto; width: 220px; scroll-snap-align: start;
+    border-radius: 18px; overflow: hidden;
+    border: 1px solid rgba(201,168,76,0.2);
+    background: rgba(255,255,255,0.03);
+  }
+  .ugc-video {
+    width: 100%; aspect-ratio: 9/16; object-fit: cover;
+    display: block; background: #111;
+  }
+  .ugc-caption {
+    padding: 12px 14px; font-size: 0.82rem; color: rgba(245,240,232,0.7);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .ugc-caption .ugc-name { font-weight: 700; color: var(--gold); }
+
+  .order-section { padding: 90px 24px; max-width: 640px; margin: 0 auto; }
+  .form-group { margin-bottom: 18px; }
+  .form-group label { display: block; font-size: 0.82rem; font-weight: 700; color: var(--gold); margin-bottom: 7px; letter-spacing: 1px; }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.22);
+    border-radius: 12px; padding: 13px 16px;
+    color: var(--cream); font-family: 'Tajawal', sans-serif; font-size: 0.97rem;
+    outline: none; transition: border-color .3s;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--gold); }
+  .form-group select option { background: #1a1a1a; }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+
+  /* حالة الخطأ في الفورم */
+  .form-group input.error,
+  .form-group select.error,
+  .form-group textarea.error {
+    border-color: #E74C3C;
+    background: rgba(231,76,60,0.06);
+    animation: shake .35s ease;
+  }
+  .field-error-msg {
+    display: none;
+    color: #E74C3C; font-size: 0.78rem; margin-top: 6px;
+  }
+  .field-error-msg.show { display: block; }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+
+  .offer-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+  .offer-tab {
+    border: 2px solid rgba(201,168,76,0.2); border-radius: 14px;
+    padding: 14px 12px; cursor: pointer; transition: border-color .2s, background .2s;
+    text-align: center; background: rgba(255,255,255,0.03);
+  }
+  .offer-tab.active { border-color: var(--gold); background: rgba(201,168,76,0.08); }
+  .offer-tab .tab-name  { font-size: 0.9rem; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+  .offer-tab .tab-desc  { font-size: 0.75rem; color: rgba(245,240,232,0.55); }
+  .offer-tab .tab-price { font-size: 1.1rem; font-weight: 800; color: var(--gold); margin-top: 6px; }
+
+  .total-box {
+    background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(61,94,53,0.08));
+    border: 1px solid rgba(201,168,76,0.25); border-radius: 14px;
+    padding: 18px 22px; display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 20px;
+  }
+  .total-box span   { font-size: 0.9rem; color: rgba(245,240,232,0.65); }
+  .total-box strong { font-size: 1.5rem; font-weight: 800; color: var(--gold); }
+  .submit-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--olive), var(--olive-lt));
+    color: var(--white); border: none; padding: 18px;
+    border-radius: 50px; font-family: 'Tajawal', sans-serif;
+    font-size: 1.15rem; font-weight: 800; cursor: pointer;
+    box-shadow: 0 8px 32px rgba(61,94,53,0.45);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(61,94,53,0.65); }
+  .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .form-note { text-align: center; font-size: 0.78rem; color: rgba(245,240,232,0.35); margin-top: 12px; }
+
+  .success-msg { display: none; text-align: center; padding: 48px 24px; }
+  .success-msg .s-icon { font-size: 4rem; margin-bottom: 16px; }
+  .success-msg h3 { font-size: 1.8rem; font-weight: 800; color: var(--gold); margin-bottom: 12px; }
+  .success-msg p  { color: rgba(245,240,232,0.7); line-height: 1.9; }
+
+  .trust-strip {
+    border-top: 1px solid rgba(201,168,76,0.1); padding: 44px 24px;
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 36px;
+  }
+  .trust-item { display: flex; align-items: center; gap: 10px; font-size: 0.88rem; color: rgba(245,240,232,0.6); }
+  .trust-item span:first-child { font-size: 1.4rem; }
+
+  footer {
+    text-align: center; padding: 28px 24px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.78rem; color: rgba(245,240,232,0.3);
+  }
+  footer a { color: var(--gold); text-decoration: none; }
+
+  .sticky-cta {
+    display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 99;
+    background: rgba(13,13,13,0.97); border-top: 1px solid rgba(201,168,76,0.2);
+    padding: 12px 20px;
+  }
+  .sticky-cta a {
+    display: block; text-align: center;
+    background: linear-gradient(135deg, var(--gold), var(--gold-lt));
+    color: var(--black); padding: 14px; border-radius: 50px;
+    font-family: 'Tajawal', sans-serif; font-size: 1rem; font-weight: 800;
+    text-decoration: none;
+  }
+
+  /* WHATSAPP FLOATING BUTTON */
+  .wa-float {
+    position: fixed; bottom: 24px; left: 24px; z-index: 98;
+    width: 58px; height: 58px; border-radius: 50%;
+    background: #25D366;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 24px rgba(37,211,102,0.5);
+    text-decoration: none;
+    animation: waPulse 2.5s ease-in-out infinite;
+  }
+  .wa-float svg { width: 30px; height: 30px; }
+  @keyframes waPulse {
+    0%, 100% { box-shadow: 0 6px 24px rgba(37,211,102,0.5); }
+    50%      { box-shadow: 0 6px 24px rgba(37,211,102,0.5), 0 0 0 8px rgba(37,211,102,0.15); }
+  }
+  .wa-tooltip {
+    position: absolute; right: 68px; top: 50%; transform: translateY(-50%);
+    background: var(--black); color: var(--cream);
+    padding: 8px 14px; border-radius: 8px; font-size: 0.8rem;
+    white-space: nowrap; border: 1px solid rgba(201,168,76,0.2);
+    opacity: 0; pointer-events: none; transition: opacity .25s ease;
+  }
+  .wa-float:hover .wa-tooltip { opacity: 1; }
+
+  .reveal { opacity: 0; transform: translateY(36px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; padding: 90px 20px 48px; text-align: center; }
+    .hero-image { order: -1; }
+    .hero-image img { max-width: 300px; }
+    .hero-badges { justify-content: center; }
+    .prob-sol { grid-template-columns: 1fr; }
+    .offer-tabs { grid-template-columns: 1fr; }
+    .sticky-cta { display: block; }
+    body { padding-bottom: 72px; }
+    nav { padding: 14px 16px; }
+    .wa-float { bottom: 88px; left: 16px; width: 52px; height: 52px; }
+    .wa-float svg { width: 26px; height: 26px; }
+    .wa-tooltip { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-fixed">
+<nav>
+  <div class="nav-logo">كنوز الفيروز</div>
+  <button class="nav-cta" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">اطلب الآن</button>
+</nav>
+
+<div class="urgency-bar">
+  عرض حصري لفترة محدودة — <span>شحن مجاني</span> على جميع الطلبات هذا الأسبوع
+</div>
+</div>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">من أرض سيناء الأصيلة</div>
+    <h1>عسل حبة البركة<br><span>طبيعي 100%</span><br>من مناحل سيناء</h1>
+    <p class="hero-sub">عسل خام من مناحل سيناء الجبلية، ممزوج بحبة البركة الأصيلة.<br>بدون سكر مضاف، بدون تسخين — الفوائد كاملة في كل ملعقة.</p>
+    <div class="hero-badges">
+      <span class="badge">عسل خام</span>
+      <span class="badge">طبيعي 100%</span>
+      <span class="badge">حبة البركة</span>
+      <span class="badge">دفع عند الاستلام</span>
+    </div>
+    <a href="#order" class="hero-cta">اطلب الآن</a>
+  </div>
+  <div class="hero-image">
+    <img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=800&q=80" alt="عسل حبة البركة كنوز الفيروز">
+    <div class="hero-float-badge">سيناء — أرض الفيروز</div>
+  </div>
+</section>
+
+<section class="origin reveal">
+  <h2>من سيناء — أرض الفيروز</h2>
+  <p>مناحلنا في وديان سيناء الجبلية، بعيدة عن أي تلوث، تنتج عسلاً خاماً غير مصفّى. نمزجه بحبة البركة الأصيلة للحفاظ على كامل فوائدهما الطبيعية.</p>
+</section>
+
+<section class="prob-sol-wrap">
+  <div class="section-eyebrow reveal">المشكلة والحل</div>
+  <h2 class="section-title reveal">العسل التجاري مش كله سواء</h2>
+  <div class="prob-sol">
+    <div class="prob-box reveal">
+      <h3>مشاكل العسل العادي</h3>
+      <ul>
+        <li>مخلوط بسكر أو شربات صناعي</li>
+        <li>مسخّن بحرارة عالية يقتل الإنزيمات</li>
+        <li>مصدر النحل مجهول وغير موثوق</li>
+        <li>قيمة غذائية ضعيفة بعد التصنيع</li>
+        <li>سعر عالي بجودة مش تستاهل</li>
+      </ul>
+    </div>
+    <div class="sol-box reveal">
+      <h3>كنوز الفيروز — الفرق الحقيقي</h3>
+      <ul>
+        <li>من سيناء — مناحل معروفة وموثوقة</li>
+        <li>عسل خام غير مصفّى وغير مسخّن</li>
+        <li>ممزوج بحبة البركة الأصيلة</li>
+        <li>غني بمضادات الأكسدة والإنزيمات الطبيعية</li>
+        <li>بدون أي سكر أو إضافات مصنّعة</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="section-eyebrow reveal">لماذا نحن؟</div>
+  <h2 class="section-title reveal">ما يميّز كنوز الفيروز</h2>
+  <div class="features-grid">
+    <div class="feat-card reveal">
+      <div class="feat-icon">🐝</div>
+      <h3>عسل خام غير مصفّى</h3>
+      <p>لا تسخين، لا تصفية صناعية. العسل كما تركه النحل، بكل إنزيماته وفوائده.</p>
+    </div>
+    <div class="feat-card reveal">
+      <div class="feat-icon">🌿</div>
+      <h3>بدون أي إضافات</h3>
+      <p>لا سكر مضاف، لا شربات صناعي، لا مواد حافظة. عسل خالص ممزوج بحبة البركة فقط.</p>
+    </div>
+    <div class="feat-card reveal">
+      <div class="feat-icon">📍</div>
+      <h3>مصدر موثوق</h3>
+      <p>مناحلنا في قلب سيناء. نعرف كل خلية ونضمن لك الجودة من المنحل لباب بيتك.</p>
+    </div>
+    <div class="feat-card reveal">
+      <div class="feat-icon">🚚</div>
+      <h3>شحن سريع</h3>
+      <p>نشحن لجميع أنحاء مصر خلال 2-4 أيام. التغليف محكم لضمان وصول المنتج سليم.</p>
+    </div>
+  </div>
+</section>
+
+<section class="reviews">
+  <div class="section-eyebrow reveal">آراء العملاء</div>
+  <h2 class="section-title reveal">قالوا عنّا</h2>
+  <div class="reviews-grid">
+    <div class="review-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">عسل حقيقي بجد، القوام كثيف وطعمه مختلف تماماً عن اللي بنشتريه من السوبر ماركت. بناخده كل يوم الصبح.</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">س</div>
+        <div>
+          <div class="reviewer-name">سميرة محمد</div>
+          <div class="reviewer-loc">القاهرة</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">طلبت الباكيج، وصل في يومين والتعامل محترم. العسل طعمه أصلي وريحة حبة البركة واضحة. هطلب تاني إن شاء الله.</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">أ</div>
+        <div>
+          <div class="reviewer-name">أحمد رضا</div>
+          <div class="reviewer-loc">الجيزة</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">بناخد العسل ده لأولادي بدل السكر في كل حاجة. حاسة إنه طبيعي فعلاً، مش زي العسل المغشوش المنتشر.</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">ف</div>
+        <div>
+          <div class="reviewer-name">فاطمة عبد الله</div>
+          <div class="reviewer-loc">الإسكندرية</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery-section">
+  <div class="section-eyebrow reveal">المعرض</div>
+  <h2 class="section-title reveal">شاهد المنتج عن قرب</h2>
+
+  <div class="gallery-grid">
+    <div class="gallery-item reveal">
+      <img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=500&q=80" alt="عسل حبة البركة كنوز الفيروز - صورة المنتج">
+    </div>
+    <div class="gallery-item reveal">
+      <img src="https://images.unsplash.com/photo-1558642891-54be180ea339?w=500&q=80" alt="عسل كنوز الفيروز - تفاصيل التغليف">
+    </div>
+    <div class="gallery-item reveal">
+      <img src="https://images.unsplash.com/photo-1471943311424-646960669fbc?w=500&q=80" alt="مناحل النحل في سيناء">
+    </div>
+    <div class="gallery-item reveal">
+      <img src="https://images.unsplash.com/photo-1611171711912-9e2bdc4be73a?w=500&q=80" alt="باكيج كنوز الفيروز كامل">
+    </div>
+  </div>
+
+  <p class="ugc-label reveal">ماذا يقول عملاؤنا — فيديوهات حقيقية</p>
+  <div class="ugc-row">
+    <div class="ugc-card reveal">
+      <video class="ugc-video" controls preload="metadata" poster="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=400&q=80">
+        <source src="" type="video/mp4">
+      </video>
+      <div class="ugc-caption"><span class="ugc-name">@mariam.k</span> تجربتي مع العسل 🍯</div>
+    </div>
+    <div class="ugc-card reveal">
+      <video class="ugc-video" controls preload="metadata" poster="https://images.unsplash.com/photo-1558642891-54be180ea339?w=400&q=80">
+        <source src="" type="video/mp4">
+      </video>
+      <div class="ugc-caption"><span class="ugc-name">@ahmed_reda</span> وصل سريع وجودة عالية</div>
+    </div>
+    <div class="ugc-card reveal">
+      <video class="ugc-video" controls preload="metadata" poster="https://images.unsplash.com/photo-1471943311424-646960669fbc?w=400&q=80">
+        <source src="" type="video/mp4">
+      </video>
+      <div class="ugc-caption"><span class="ugc-name">@fatma.abdullah</span> طعم مختلف تماماً</div>
+    </div>
+    <div class="ugc-card reveal">
+      <video class="ugc-video" controls preload="metadata" poster="https://images.unsplash.com/photo-1611171711912-9e2bdc4be73a?w=400&q=80">
+        <source src="" type="video/mp4">
+      </video>
+      <div class="ugc-caption"><span class="ugc-name">@samira.m</span> أنصح بيه بجد</div>
+    </div>
+  </div>
+</section>
+
+<section class="offers" id="offers">
+  <div class="section-eyebrow reveal">العروض الحصرية</div>
+  <h2 class="section-title reveal">اختار عرضك</h2>
+  <div class="offers-grid">
+
+    <div class="offer-card reveal">
+      <span class="offer-tag">عسل حبة البركة</span>
+      <img class="offer-img"
+           src="https://images.unsplash.com/photo-1558642891-54be180ea339?w=600&q=80"
+           alt="عسل حبة البركة كنوز الفيروز">
+      <h3>عرض العسل الأصيل</h3>
+      <p class="offer-desc">عسل حبة البركة الخام من مناحل سيناء — طبيعي 100%، بدون أي إضافات.</p>
+      <ul class="offer-includes">
+        <li>عسل حبة البركة 500جم</li>
+        <li>خام وغير مصفّى</li>
+        <li>شحن لجميع المحافظات</li>
+        <li>دفع عند الاستلام</li>
+      </ul>
+      <div class="offer-price-row">
+        <div class="offer-price">٢٢٠ جنيه</div>
+        <div class="offer-old">٢٨٠ جنيه</div>
+      </div>
+      <div class="offer-save">وفّر ٦٠ جنيه</div>
+      <a href="#order" class="offer-btn" onclick="selectOffer(1)">اطلب الآن</a>
+    </div>
+
+    <div class="offer-card featured reveal">
+      <div class="offer-ribbon">الأكثر طلباً</div>
+      <span class="offer-tag">باكيج سيناء</span>
+      <img class="offer-img"
+           src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=600&q=80"
+           alt="باكيج سيناء زيت وعسل كنوز الفيروز">
+      <h3>باكيج الصحة المتكامل</h3>
+      <p class="offer-desc">عسل وزيت من سيناء في باكيج واحد — أفضل قيمة وتوفير في الشحن.</p>
+      <ul class="offer-includes">
+        <li>عسل حبة البركة 500جم</li>
+        <li>زيت زيتون بكر ممتاز 500مل</li>
+        <li>توصيل مجاني لباب البيت</li>
+        <li>دفع عند الاستلام</li>
+        <li>تغليف هدية مميز</li>
+      </ul>
+      <div class="offer-price-row">
+        <div class="offer-price">٤٥٠ جنيه</div>
+        <div class="offer-old">٥٨٠ جنيه</div>
+      </div>
+      <div class="offer-save">وفّر ١٣٠ جنيه + شحن مجاني</div>
+      <a href="#order" class="offer-btn green" onclick="selectOffer(2)">اطلب الباكيج</a>
+    </div>
+
+  </div>
+</section>
+
+<section class="order-section" id="order">
+  <div class="section-eyebrow reveal">الطلب</div>
+  <h2 class="section-title reveal">أتمّ طلبك الآن</h2>
+
+  <div id="formWrap">
+    <div class="form-group">
+      <label>اختر عرضك</label>
+      <div class="offer-tabs">
+        <div class="offer-tab active" id="tab1" onclick="selectOffer(1)">
+          <div class="tab-name">عرض العسل</div>
+          <div class="tab-desc">عسل حبة بركة 500جم</div>
+          <div class="tab-price">٢٢٠ جنيه</div>
+        </div>
+        <div class="offer-tab" id="tab2" onclick="selectOffer(2)">
+          <div class="tab-name">باكيج سيناء</div>
+          <div class="tab-desc">عسل + زيت زيتون</div>
+          <div class="tab-price">٤٥٠ جنيه</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>الكمية</label>
+      <select id="qty" onchange="updateTotal()">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>الاسم الكامل</label>
+      <input type="text" id="fname" placeholder="محمد أحمد" autocomplete="name" required>
+      <div class="field-error-msg" id="fname-error">من فضلك اكتب الاسم</div>
+    </div>
+    <div class="form-group">
+      <label>رقم الهاتف</label>
+      <input type="tel" id="fphone" placeholder="01xxxxxxxxx" inputmode="numeric" autocomplete="tel" maxlength="11" required>
+      <div class="field-error-msg" id="fphone-error">تأكد من رقم الهاتف (11 رقم، يبدأ بـ 010 أو 011 أو 012 أو 015)</div>
+    </div>
+    <div class="form-group">
+      <label>المحافظة</label>
+      <select id="fgov">
+        <option value="">اختر المحافظة</option>
+        <option>القاهرة</option><option>الجيزة</option><option>الإسكندرية</option>
+        <option>المنصورة</option><option>طنطا</option><option>الزقازيق</option>
+        <option>بورسعيد</option><option>الإسماعيلية</option><option>السويس</option>
+        <option>الشرقية</option><option>الدقهلية</option><option>الغربية</option>
+        <option>المنوفية</option><option>البحيرة</option><option>كفر الشيخ</option>
+        <option>دمياط</option><option>أخرى</option>
+      </select>
+      <div class="field-error-msg" id="fgov-error">من فضلك اختر المحافظة</div>
+    </div>
+    <div class="form-group">
+      <label>العنوان بالتفصيل</label>
+      <textarea id="faddress" placeholder="الشارع، المنطقة، رقم المبنى..."></textarea>
+      <div class="field-error-msg" id="faddress-error">من فضلك اكتب العنوان بالتفصيل</div>
+    </div>
+    <div class="form-group">
+      <label>طريقة الدفع</label>
+      <select id="fpayment">
+        <option>الدفع عند الاستلام</option>
+        <option>إنستاباي</option>
+        <option>فودافون كاش</option>
+      </select>
+    </div>
+    <div class="total-box">
+      <span id="orderSummary">1 × عرض العسل 500جم</span>
+      <strong id="totalDisplay">١٨٠ جنيه</strong>
+    </div>
+    <button class="submit-btn" id="submitBtn" onclick="submitOrder()">تأكيد الطلب</button>
+    <p class="form-note">بياناتك آمنة — الدفع عند الاستلام فقط</p>
+  </div>
+
+  <div class="success-msg" id="successMsg">
+    <div class="s-icon">🎉</div>
+    <h3>تم استلام طلبك!</h3>
+    <p>شكراً لك، سيتواصل معك فريقنا قريباً لتأكيد الطلب والشحن.<br><br>كنوز الفيروز — من سيناء إلى بيتك</p>
+  </div>
+</section>
+
+<div class="trust-strip reveal">
+  <div class="trust-item"><span>🔒</span><span>دفع آمن عند الاستلام</span></div>
+  <div class="trust-item"><span>🚚</span><span>شحن لجميع المحافظات</span></div>
+  <div class="trust-item"><span>✅</span><span>طبيعي 100%</span></div>
+  <div class="trust-item"><span>📞</span><span>دعم واتساب مباشر</span></div>
+</div>
+
+<footer>
+  <p>كنوز الفيروز 2025 — <a href="#">سياسة الخصوصية</a> — <a href="https://wa.me/201000000000">واتساب</a></p>
+</footer>
+
+<div class="sticky-cta">
+  <a href="#order">اطلب الآن — دفع عند الاستلام</a>
+</div>
+
+<a href="https://wa.me/201000000000?text=عايز%20أستفسر%20عن%20عسل%20كنوز%20الفيروز" target="_blank" class="wa-float" aria-label="تواصل معنا عبر واتساب">
+  <span class="wa-tooltip">عندك سؤال؟ كلمنا</span>
+  <svg viewBox="0 0 24 24" fill="white"><path d="M17.6 6.32A8.86 8.86 0 0 0 12.05 3.99c-4.94 0-8.95 4.01-8.95 8.95 0 1.58.41 3.12 1.2 4.47L3 21l3.7-1.27a8.9 8.9 0 0 0 4.34 1.13h.01c4.94 0 8.95-4.01 8.95-8.95a8.86 8.86 0 0 0-2.4-5.59zm-5.55 13.78h-.01a7.44 7.44 0 0 1-3.79-1.04l-.27-.16-2.82.97.95-2.75-.18-.28a7.43 7.43 0 0 1-1.14-3.95c0-4.11 3.34-7.46 7.46-7.46 1.99 0 3.86.78 5.27 2.18a7.4 7.4 0 0 1 2.18 5.27c0 4.11-3.34 7.46-7.46 7.46zm4.08-5.59c-.22-.11-1.32-.65-1.53-.73-.21-.08-.36-.11-.5.11-.15.22-.58.73-.71.88-.13.15-.26.16-.48.05-.22-.11-.95-.35-1.81-1.12-.67-.6-1.12-1.34-1.25-1.56-.13-.22-.01-.34.1-.45.1-.1.22-.26.33-.39.11-.13.15-.22.22-.37.07-.15.04-.27-.02-.39-.06-.11-.5-1.21-.69-1.65-.18-.43-.36-.37-.5-.38-.13-.01-.27-.01-.42-.01s-.39.05-.6.27c-.21.22-.79.77-.79 1.88s.81 2.18.92 2.33c.11.15 1.59 2.43 3.86 3.4.54.23.96.37 1.29.48.54.17 1.03.15 1.42.09.43-.06 1.32-.54 1.51-1.06.19-.52.19-.96.13-1.06-.06-.1-.2-.15-.42-.26z"/></svg>
+</a>
+
+<script>
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(r => io.observe(r));
+
+  // Measure fixed header height and expose as CSS var
+  const topFixed = document.querySelector('.top-fixed');
+  function syncHeaderHeight() {
+    document.documentElement.style.setProperty('--header-h', topFixed.offsetHeight + 'px');
+  }
+  syncHeaderHeight();
+  window.addEventListener('resize', syncHeaderHeight);
+  topFixed.addEventListener('transitionend', syncHeaderHeight);
+
+  // Hide urgency bar when order section is visible
+  const urgencyBar = document.querySelector('.urgency-bar');
+  const orderSection = document.getElementById('order');
+  const orderObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        urgencyBar.classList.add('hidden');
+      } else {
+        urgencyBar.classList.remove('hidden');
+      }
+      setTimeout(syncHeaderHeight, 50);
+      setTimeout(syncHeaderHeight, 450);
+    });
+  }, { threshold: 0.1 });
+  orderObserver.observe(orderSection);
+
+  const OFFERS = {
+    1: { name: 'عرض العسل 500جم',           price: 220, productType: 'عسل حبة البركة' },
+    2: { name: 'باكيج سيناء (عسل + زيت)', price: 450, productType: 'باكيج (زيت + عسل)' }
+  };
+  let currentOffer = 1;
+
+  // قراءة بيانات الإعلان (UTM) من الرابط
+  function getAdSource() {
+    const params = new URLSearchParams(window.location.search);
+    const utmId     = params.get('utm_id');
+    const utmSource = params.get('utm_source');
+    const utmCampaign = params.get('utm_campaign');
+    if (utmId || utmSource || utmCampaign) {
+      return [utmSource, utmCampaign, utmId].filter(Boolean).join(' | ');
+    }
+    // تجاهل أي referrer من نفس الموقع (زي صفحة الشكر) عشان منسجلش الموقع نفسه كمصدر
+    const ref = document.referrer;
+    if (!ref || ref.includes(window.location.hostname)) {
+      return 'مباشر';
+    }
+    return ref;
+  }
+
+  function selectOffer(id) {
+    currentOffer = id;
+    document.querySelectorAll('.offer-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab' + id).classList.add('active');
+    updateTotal();
+  }
+
+  function updateTotal() {
+    const qty   = parseInt(document.getElementById('qty').value);
+    const offer = OFFERS[currentOffer];
+    const total = qty * offer.price;
+    document.getElementById('totalDisplay').textContent = total.toLocaleString('ar-EG') + ' جنيه';
+    document.getElementById('orderSummary').textContent = qty + ' x ' + offer.name;
+  }
+
+  let isSubmitting = false;
+
+  // تحويل الأرقام العربية (٠١٢٣٤٥٦٧٨٩) والفارسية (۰۱۲۳۴۵۶۷۸۹) لأرقام إنجليزية
+  function toWesternDigits(str) {
+    const arabicMap  = { '٠':'0','١':'1','٢':'2','٣':'3','٤':'4','٥':'5','٦':'6','٧':'7','٨':'8','٩':'9' };
+    const persianMap = { '۰':'0','۱':'1','۲':'2','۳':'3','۴':'4','۵':'5','۶':'6','۷':'7','۸':'8','۹':'9' };
+    return str.replace(/[٠-٩۰-۹]/g, d => arabicMap[d] || persianMap[d] || d);
+  }
+
+  async function submitOrder() {
+    if (isSubmitting) return; // قفل فوري يمنع أي ضغطة تانية لحد ما الأولى تخلص
+    isSubmitting = true;
+
+    const name    = document.getElementById('fname').value.trim();
+    const phone   = toWesternDigits(document.getElementById('fphone').value.trim());
+    const gov     = document.getElementById('fgov').value;
+    const address = document.getElementById('faddress').value.trim();
+    const qty     = parseInt(document.getElementById('qty').value);
+    const payment = document.getElementById('fpayment').value;
+    const offer   = OFFERS[currentOffer];
+
+    // تنظيف أي تظليل أحمر قديم
+    ['fname','fphone','fgov','faddress'].forEach(id => {
+      document.getElementById(id).classList.remove('error');
+      document.getElementById(id + '-error').classList.remove('show');
+    });
+
+    const phoneClean = phone.replace(/[^0-9]/g, '');
+    const phoneValid = /^01[0-2,5]\d{8}$/.test(phoneClean);
+
+    const fields = [
+      { id: 'fname',    valid: !!name },
+      { id: 'fphone',   valid: !!phone && phoneValid },
+      { id: 'fgov',     valid: !!gov },
+      { id: 'faddress', valid: !!address }
+    ];
+
+    let firstInvalid = null;
+    fields.forEach(f => {
+      if (!f.valid) {
+        const el = document.getElementById(f.id);
+        el.classList.add('error');
+        document.getElementById(f.id + '-error').classList.add('show');
+        if (!firstInvalid) firstInvalid = el;
+      }
+    });
+
+    if (firstInvalid) {
+      firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      firstInvalid.focus();
+      isSubmitting = false;
+      return;
+    }
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true; btn.textContent = 'جارٍ الإرسال...';
+
+    const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwQUvlrFS3UZPyess2u6Ol9Ng1T9N-Vc3IuAhnSRwbyj7iNgNnCl5kZNkodnpIBgliPZw/exec';
+    const orderId = Math.floor(100000 + Math.random()*900000);
+    const total = qty * offer.price;
+
+    try {
+      await fetch(SHEET_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({
+          timestamp: new Date().toLocaleString('ar-EG', { timeZone: 'Africa/Cairo' }),
+          orderId,
+          productType: offer.productType,
+          offer: offer.name, qty,
+          unit_price: offer.price,
+          total,
+          name, phone, gov, address, payment,
+          source: getAdSource()
+        })
+      });
+      const params = new URLSearchParams({
+        id: orderId,
+        offer: offer.name,
+        qty: qty,
+        total: total
+      });
+      window.location.href = 'thank-you.html?' + params.toString();
+    } catch(e) {
+      btn.disabled = false; btn.textContent = 'تأكيد الطلب';
+      isSubmitting = false;
+      alert('حدث خطأ، حاول مرة أخرى');
+    }
+  }
+
+  // إزالة التظليل الأحمر فور ما العميل يبدأ يصحح الخانة
+  ['fname','fphone','fgov','faddress'].forEach(id => {
+    const el = document.getElementById(id);
+    el.addEventListener('input', () => {
+      el.classList.remove('error');
+      document.getElementById(id + '-error').classList.remove('show');
+    });
+    el.addEventListener('change', () => {
+      el.classList.remove('error');
+      document.getElementById(id + '-error').classList.remove('show');
+    });
+  });
+</script>
+</body>
+</html>
