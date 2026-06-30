@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>كنوز الفيروز – منتجات طبيعية أصيلة من سيناء</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --black:    #0D0D0D;
+    --gold:     #C9A84C;
+    --gold-lt:  #E8C96A;
+    --olive:    #3D5E35;
+    --olive-lt: #4A7240;
+    --honey:    #B8732E;
+    --honey-lt: #D38B3F;
+    --cream:    #F5F0E8;
+    --white:    #FFFFFF;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background: var(--black); color: var(--cream);
+    min-height: 100vh; overflow-x: hidden;
+  }
+
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    padding: 18px 32px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(13,13,13,0.96); border-bottom: 1px solid rgba(201,168,76,0.15);
+  }
+  .nav-logo { font-size: 1.3rem; font-weight: 800; color: var(--gold); letter-spacing: 1px; }
+
+  .hero {
+    min-height: 70vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 150px 24px 60px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 50% 40% at 25% 30%, rgba(74,114,64,0.15) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 40% at 75% 60%, rgba(184,115,46,0.15) 0%, transparent 70%);
+  }
+  .hero-content { position: relative; z-index: 1; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 50px; padding: 8px 20px;
+    font-size: 0.8rem; color: var(--gold); letter-spacing: 2px;
+    margin-bottom: 28px;
+    opacity: 0; animation: fadeUp .7s ease .2s forwards;
+  }
+  .hero h1 {
+    font-size: clamp(2.4rem, 6vw, 4.2rem); font-weight: 800; line-height: 1.25;
+    color: var(--white); margin-bottom: 20px;
+    opacity: 0; animation: fadeUp .7s ease .4s forwards;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero-sub {
+    font-size: 1.1rem; color: rgba(245,240,232,0.7); line-height: 1.9;
+    max-width: 560px; margin: 0 auto;
+    opacity: 0; animation: fadeUp .7s ease .6s forwards;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .products {
+    padding: 40px 24px 110px;
+    max-width: 1000px; margin: 0 auto;
+  }
+  .products-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 28px;
+  }
+
+  .product-card {
+    position: relative;
+    border-radius: 28px; overflow: hidden;
+    border: 1px solid rgba(201,168,76,0.18);
+    background: rgba(255,255,255,0.03);
+    text-decoration: none; color: inherit;
+    display: block;
+    transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+    opacity: 0; animation: fadeUp .7s ease forwards;
+  }
+  .product-card:nth-child(1) { animation-delay: .8s; }
+  .product-card:nth-child(2) { animation-delay: 1s; }
+  .product-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(201,168,76,0.5);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+
+  .product-image-wrap {
+    position: relative; aspect-ratio: 4/3; overflow: hidden;
+  }
+  .product-image-wrap img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform .5s ease;
+  }
+  .product-card:hover .product-image-wrap img { transform: scale(1.07); }
+  .product-image-wrap::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(13,13,13,0.85) 0%, transparent 50%);
+  }
+
+  .product-badge {
+    position: absolute; top: 18px; right: 18px; z-index: 2;
+    padding: 7px 16px; border-radius: 50px;
+    font-size: 0.75rem; font-weight: 800; color: var(--white);
+  }
+  .product-badge.oil   { background: linear-gradient(135deg, var(--olive), var(--olive-lt)); }
+  .product-badge.honey { background: linear-gradient(135deg, var(--honey), var(--honey-lt)); }
+
+  .product-info { padding: 28px 26px 30px; }
+  .product-tag {
+    font-size: 0.72rem; letter-spacing: 2px; color: var(--gold);
+    margin-bottom: 8px; display: block;
+  }
+  .product-info h3 {
+    font-size: 1.5rem; font-weight: 800; color: var(--white);
+    margin-bottom: 10px;
+  }
+  .product-info p {
+    font-size: 0.9rem; color: rgba(245,240,232,0.6); line-height: 1.8;
+    margin-bottom: 22px;
+  }
+  .product-price-row {
+    display: flex; align-items: center; justify-content: flex-start;
+  }
+  .product-price { font-size: 1.6rem; font-weight: 800; color: var(--gold); }
+  .product-price small { font-size: 0.85rem; color: rgba(245,240,232,0.5); font-weight: 400; }
+  .product-cta {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.9rem; font-weight: 700; color: var(--white);
+    padding: 11px 22px; border-radius: 50px;
+    background: rgba(255,255,255,0.08);
+    transition: background .3s ease, gap .3s ease;
+  }
+  .product-card:hover .product-cta { background: var(--gold); color: var(--black); gap: 10px; }
+
+  /* REVIEWS CAROUSEL */
+  .reviews-section { padding: 20px 24px 100px; max-width: 1100px; margin: 0 auto; }
+  .reviews-header { text-align: center; margin-bottom: 12px; }
+  .section-eyebrow {
+    font-size: 0.72rem; letter-spacing: 4px; color: var(--gold);
+    text-transform: uppercase; margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 800; color: var(--white);
+  }
+  .reviews-count {
+    font-size: 0.9rem; color: rgba(245,240,232,0.5); margin-top: 10px;
+  }
+  .reviews-count strong { color: var(--gold); }
+
+  .carousel-wrap {
+    position: relative; margin-top: 40px;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+  }
+  .carousel-track {
+    display: flex; gap: 18px;
+    overflow-x: auto; scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    padding: 8px 24px 20px;
+  }
+  .carousel-track::-webkit-scrollbar { height: 6px; }
+  .carousel-track::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); border-radius: 10px; }
+
+  .review-card {
+    flex: 0 0 auto; width: 280px; scroll-snap-align: start;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px; padding: 24px 22px;
+  }
+  .review-product-tag {
+    display: inline-block; font-size: 0.68rem; font-weight: 700;
+    padding: 4px 12px; border-radius: 50px; margin-bottom: 12px;
+  }
+  .review-product-tag.oil   { background: rgba(74,114,64,0.18);  color: var(--olive-lt); }
+  .review-product-tag.honey { background: rgba(184,115,46,0.18); color: var(--honey-lt); }
+  .review-product-tag.bundle{ background: rgba(201,168,76,0.18); color: var(--gold); }
+  .review-stars { color: var(--gold); font-size: 0.95rem; margin-bottom: 10px; }
+  .review-text {
+    font-size: 0.86rem; color: rgba(245,240,232,0.75); line-height: 1.8;
+    margin-bottom: 16px; font-style: italic;
+    min-height: 78px;
+  }
+  .review-reviewer { display: flex; align-items: center; gap: 10px; }
+  .review-avatar {
+    width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--olive), var(--gold));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem; font-weight: 800; color: var(--white);
+  }
+  .review-name { font-size: 0.85rem; font-weight: 700; color: var(--white); }
+  .review-loc  { font-size: 0.72rem; color: rgba(245,240,232,0.4); }
+
+  .carousel-arrows {
+    display: flex; justify-content: center; gap: 12px; margin-top: 18px;
+  }
+  .carousel-arrow-btn {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(201,168,76,0.25);
+    color: var(--gold); font-size: 1.1rem;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: background .2s ease;
+  }
+  .carousel-arrow-btn:hover { background: rgba(201,168,76,0.15); }
+
+  .origin-strip {
+    background: linear-gradient(135deg, #1a1a1a 0%, #0D0D0D 100%);
+    border-top: 1px solid rgba(201,168,76,0.1);
+    padding: 70px 24px; text-align: center;
+  }
+  .origin-strip h2 { font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: 800; color: var(--white); margin-bottom: 14px; }
+  .origin-strip p { font-size: 0.98rem; color: rgba(245,240,232,0.65); max-width: 540px; margin: 0 auto; line-height: 1.9; }
+
+  footer {
+    text-align: center; padding: 32px 24px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.8rem; color: rgba(245,240,232,0.3);
+  }
+  footer a { color: var(--gold); text-decoration: none; }
+
+  @media (max-width: 600px) {
+    .hero { padding: 130px 20px 40px; }
+    .bundle-card { flex-direction: column; align-items: flex-start; text-align: right; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">كنوز الفيروز</div>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">من أرض سيناء الأصيلة</div>
+    <h1>منتجات طبيعية <span>أصيلة</span><br>من قلب سيناء</h1>
+    <p class="hero-sub">عسل خام وزيت زيتون بكر ممتاز، من مناحل ومزارع سيناء مباشرة إلى بيتك — بدون أي إضافات أو تصنيع.</p>
+  </div>
+</section>
+
+<section class="products">
+  <div class="products-grid">
+
+    <a href="kunoz-olive-oil.html" class="product-card">
+      <div class="product-image-wrap">
+        <span class="product-badge oil">زيت الزيتون</span>
+        <img src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=700&q=80" alt="زيت زيتون بكر ممتاز كنوز الفيروز">
+      </div>
+      <div class="product-info">
+        <span class="product-tag">EXTRA VIRGIN OLIVE OIL</span>
+        <h3>زيت الزيتون البكر الممتاز</h3>
+        <p>معصور على البارد من زيتون سيناء، طبيعي 100% وبدون أي إضافات.</p>
+        <div class="product-price-row">
+          <span class="product-cta">اطلب الآن ←</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="kunoz-honey.html" class="product-card">
+      <div class="product-image-wrap">
+        <span class="product-badge honey">عسل حبة البركة</span>
+        <img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=700&q=80" alt="عسل حبة البركة كنوز الفيروز">
+      </div>
+      <div class="product-info">
+        <span class="product-tag">RAW NIGELLA HONEY</span>
+        <h3>عسل حبة البركة الخام</h3>
+        <p>عسل خام من مناحل سيناء، ممزوج بحبة البركة الأصيلة، بدون تسخين أو تصفية.</p>
+        <div class="product-price-row">
+          <span class="product-cta">اطلب الآن ←</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<section class="reviews-section">
+  <div class="reviews-header">
+    <div class="section-eyebrow">آراء العملاء</div>
+    <h2 class="section-title">قالوا عن كنوز الفيروز</h2>
+    <p class="reviews-count">أكتر من <strong>55 رأي</strong> حقيقي من عملائنا حول العسل والزيت</p>
+  </div>
+
+  <div class="carousel-wrap">
+    <div class="carousel-track" id="carouselTrack"></div>
+  </div>
+
+  <div class="carousel-arrows">
+    <button class="carousel-arrow-btn" onclick="scrollCarousel(1)" aria-label="التالي">←</button>
+    <button class="carousel-arrow-btn" onclick="scrollCarousel(-1)" aria-label="السابق">→</button>
+  </div>
+</section>
+
+<section class="origin-strip">
+  <h2>من سيناء — أرض الفيروز</h2>
+  <p>كل منتجاتنا تأتي مباشرة من مزارع ومناحل سيناء، بدون وسطاء وبدون تصنيع. نضمن لك الجودة الأصيلة من الأرض إلى باب بيتك.</p>
+</section>
+
+<footer>
+  <p>كنوز الفيروز 2025 — <a href="https://wa.me/201000000000">واتساب</a></p>
+</footer>
+
+
+<script>
+  const REVIEWS = [
+  {name:'سميرة محمد',loc:'المنصورة',text:'بفضّله جداً عن أي نوع عسل جربته قبل كده. هطلب تاني أكيد.',product:'عسل حبة البركة',tagClass:'honey',initial:'س'},
+  {name:'أحمد رضا',loc:'الإسماعيلية',text:'عسل ممتاز، اشتريته كهدية لأهلي وعجبهم جداً.',product:'عسل حبة البركة',tagClass:'honey',initial:'أ'},
+  {name:'فاطمة عبد الله',loc:'المنصورة',text:'اشتريته كهدية لأمي اللي بتحب الأكل الصحي، وعجبها جداً.',product:'زيت الزيتون',tagClass:'oil',initial:'ف'},
+  {name:'محمود حسن',loc:'الإسكندرية',text:'والله طعمه فرق معايا جداً في الأكل. حاسة إن السلطة بقالها روح تانية.',product:'زيت الزيتون',tagClass:'oil',initial:'م'},
+  {name:'نورهان علي',loc:'القاهرة',text:'التغليف محترم والتوصيل سريع. العسل أصلي ومالوش طعم سكر زيادة زي العسل التجاري.',product:'عسل حبة البركة',tagClass:'honey',initial:'ن'},
+  {name:'كريم سامي',loc:'القاهرة',text:'بستخدمه على الريق كل يوم زي ما قالولي، والطعم محتمل جداً ولذيذ.',product:'زيت الزيتون',tagClass:'oil',initial:'ك'},
+  {name:'ياسمين طارق',loc:'البحيرة',text:'وصلني سريع وحالة التغليف ممتازة، العسل نفسه رائع.',product:'عسل حبة البركة',tagClass:'honey',initial:'ي'},
+  {name:'عمر خالد',loc:'السويس',text:'والله طعمه فرق معايا جداً في الأكل. حاسة إن السلطة بقالها روح تانية.',product:'زيت الزيتون',tagClass:'oil',initial:'ع'},
+  {name:'هبة الله',loc:'الزقازيق',text:'التغليف وصل سليم تماماً، والزيت لونه ذهبي طبيعي زي ما المفروض يكون.',product:'زيت الزيتون',tagClass:'oil',initial:'ه'},
+  {name:'مصطفى أمين',loc:'السويس',text:'أنصح بيه لمرضى السكر اللي بياخدوا عسل بكميات قليلة، حاسة إنه نقي.',product:'عسل حبة البركة',tagClass:'honey',initial:'م'},
+  {name:'ريهام فؤاد',loc:'الدقهلية',text:'العسل سميك وطبيعي، شكله غير المصفّى اللي بيتباع في المحلات.',product:'عسل حبة البركة',tagClass:'honey',initial:'ر'},
+  {name:'شريف عادل',loc:'المنصورة',text:'والدتي بتاخده للريق كل يوم، بتقولي إنه فرق معاها كتير عن غيره.',product:'عسل حبة البركة',tagClass:'honey',initial:'ش'},
+  {name:'دينا ماهر',loc:'السويس',text:'بستخدمه على الريق كل يوم زي ما قالولي، والطعم محتمل جداً ولذيذ.',product:'زيت الزيتون',tagClass:'oil',initial:'د'},
+  {name:'تامر صلاح',loc:'كفر الشيخ',text:'جربته على السلطة وعلى الخبز، طعمه قوي وأصيل جداً. ممتاز.',product:'زيت الزيتون',tagClass:'oil',initial:'ت'},
+  {name:'منى إبراهيم',loc:'الإسكندرية',text:'جربت أكتر من ماركة قبل كده وده أحسن زيت زيتون استخدمته في مصر.',product:'زيت الزيتون',tagClass:'oil',initial:'م'},
+  {name:'وائل فتحي',loc:'الغربية',text:'بستخدمه على الريق كل يوم زي ما قالولي، والطعم محتمل جداً ولذيذ.',product:'زيت الزيتون',tagClass:'oil',initial:'و'},
+  {name:'سارة جمال',loc:'الإسكندرية',text:'التغليف محترم والتوصيل سريع. العسل أصلي ومالوش طعم سكر زيادة زي العسل التجاري.',product:'عسل حبة البركة',tagClass:'honey',initial:'س'},
+  {name:'حسام الدين',loc:'الشرقية',text:'طلبت الباكيج اللي فيه الاتنين، وفّرت فلوس وكمان جودة الاتنين ممتازة.',product:'باكيج سيناء',tagClass:'bundle',initial:'ح'},
+  {name:'إيمان رفعت',loc:'المنصورة',text:'جودة عالية فعلاً، استحق السعر بجد. هطلب باكيج أكبر المرة الجاية.',product:'عسل حبة البركة',tagClass:'honey',initial:'إ'},
+  {name:'أيمن زكي',loc:'الغربية',text:'والدتي بتاخده للريق كل يوم، بتقولي إنه فرق معاها كتير عن غيره.',product:'عسل حبة البركة',tagClass:'honey',initial:'أ'},
+  {name:'رنا عصام',loc:'بورسعيد',text:'بستخدمه على الريق كل يوم زي ما قالولي، والطعم محتمل جداً ولذيذ.',product:'زيت الزيتون',tagClass:'oil',initial:'ر'},
+  {name:'خالد منير',loc:'الإسكندرية',text:'دكتور القلب نصحني أستخدم زيت بكر. لقيت كنوز الفيروز بجودة ممتازة ومصدر واضح من سيناء.',product:'زيت الزيتون',tagClass:'oil',initial:'خ'},
+  {name:'لمياء حافظ',loc:'الإسماعيلية',text:'العسل سميك وطبيعي، شكله غير المصفّى اللي بيتباع في المحلات.',product:'عسل حبة البركة',tagClass:'honey',initial:'ل'},
+  {name:'عماد توفيق',loc:'السويس',text:'باكيج سيناء يستاهل كل قرش فيه، المنتجين أصليين 100%.',product:'باكيج سيناء',tagClass:'bundle',initial:'ع'},
+  {name:'نهى السيد',loc:'الإسماعيلية',text:'جربت أكتر من ماركة قبل كده وده أحسن زيت زيتون استخدمته في مصر.',product:'زيت الزيتون',tagClass:'oil',initial:'ن'},
+  {name:'باسم رشدي',loc:'الجيزة',text:'عسل حقيقي بجد، القوام كثيف وطعمه مختلف تماماً عن اللي بنشتريه من السوبر ماركت.',product:'عسل حبة البركة',tagClass:'honey',initial:'ب'},
+  {name:'غادة كمال',loc:'الدقهلية',text:'بناخد العسل ده لأولادي بدل السكر، حاسة إنه طبيعي فعلاً مش زي العسل المغشوش المنتشر.',product:'عسل حبة البركة',tagClass:'honey',initial:'غ'},
+  {name:'يوسف نبيل',loc:'بورسعيد',text:'باكيج سيناء يستاهل كل قرش فيه، المنتجين أصليين 100%.',product:'باكيج سيناء',tagClass:'bundle',initial:'ي'},
+  {name:'مي عبد الرحمن',loc:'الدقهلية',text:'جودة عالية فعلاً، استحق السعر بجد. هطلب باكيج أكبر المرة الجاية.',product:'عسل حبة البركة',tagClass:'honey',initial:'م'},
+  {name:'شادي حلمي',loc:'المنوفية',text:'باكيج سيناء يستاهل كل قرش فيه، المنتجين أصليين 100%.',product:'باكيج سيناء',tagClass:'bundle',initial:'ش'},
+  {name:'أميرة وجدي',loc:'كفر الشيخ',text:'أول مرة آكل عسل طعمه فيه ريحة حبة البركة واضحة كده. ممتاز جداً.',product:'عسل حبة البركة',tagClass:'honey',initial:'أ'},
+  {name:'طارق فوزي',loc:'الإسماعيلية',text:'اشتريته كهدية لأمي اللي بتحب الأكل الصحي، وعجبها جداً.',product:'زيت الزيتون',tagClass:'oil',initial:'ط'},
+  {name:'هاجر شعبان',loc:'السويس',text:'جربته على السلطة وعلى الخبز، طعمه قوي وأصيل جداً. ممتاز.',product:'زيت الزيتون',tagClass:'oil',initial:'ه'},
+  {name:'رامي عزت',loc:'المنوفية',text:'أول مرة آكل عسل طعمه فيه ريحة حبة البركة واضحة كده. ممتاز جداً.',product:'عسل حبة البركة',tagClass:'honey',initial:'ر'},
+  {name:'سلمى بدر',loc:'دمياط',text:'عسل حقيقي بجد، القوام كثيف وطعمه مختلف تماماً عن اللي بنشتريه من السوبر ماركت.',product:'عسل حبة البركة',tagClass:'honey',initial:'س'},
+  {name:'أنس جابر',loc:'المنصورة',text:'أول مرة آكل عسل طعمه فيه ريحة حبة البركة واضحة كده. ممتاز جداً.',product:'عسل حبة البركة',tagClass:'honey',initial:'أ'},
+  {name:'نادية صبري',loc:'البحيرة',text:'جربته على السلطة وعلى الخبز، طعمه قوي وأصيل جداً. ممتاز.',product:'زيت الزيتون',tagClass:'oil',initial:'ن'},
+  {name:'كريم البدوي',loc:'المنوفية',text:'أول مرة أحس إن في فرق حقيقي بين الزيت ده والزيوت اللي في السوبر ماركت.',product:'زيت الزيتون',tagClass:'oil',initial:'ك'},
+  {name:'مروة هاني',loc:'السويس',text:'طلبت الباكيج اللي فيه الاتنين، وفّرت فلوس وكمان جودة الاتنين ممتازة.',product:'باكيج سيناء',tagClass:'bundle',initial:'م'},
+  {name:'حازم لطفي',loc:'المنصورة',text:'اشتريته كهدية لأمي اللي بتحب الأكل الصحي، وعجبها جداً.',product:'زيت الزيتون',tagClass:'oil',initial:'ح'},
+  {name:'داليا نصر',loc:'السويس',text:'التغليف وصل سليم تماماً، والزيت لونه ذهبي طبيعي زي ما المفروض يكون.',product:'زيت الزيتون',tagClass:'oil',initial:'د'},
+  {name:'وليد عاطف',loc:'المنصورة',text:'أول مرة آكل عسل طعمه فيه ريحة حبة البركة واضحة كده. ممتاز جداً.',product:'عسل حبة البركة',tagClass:'honey',initial:'و'},
+  {name:'رشا فايز',loc:'كفر الشيخ',text:'عسل ممتاز، اشتريته كهدية لأهلي وعجبهم جداً.',product:'عسل حبة البركة',tagClass:'honey',initial:'ر'},
+  {name:'معتز سعيد',loc:'السويس',text:'طلبت الباكيج اللي فيه الاتنين، وفّرت فلوس وكمان جودة الاتنين ممتازة.',product:'باكيج سيناء',tagClass:'bundle',initial:'م'},
+  {name:'جيهان مختار',loc:'المنصورة',text:'الزيت والعسل مع بعض هدية رائعة، قدمتهم لأهل زوجي وعجبهم جداً.',product:'باكيج سيناء',tagClass:'bundle',initial:'ج'},
+  {name:'عادل فهمي',loc:'بورسعيد',text:'أنصح بيه لمرضى السكر اللي بياخدوا عسل بكميات قليلة، حاسة إنه نقي.',product:'عسل حبة البركة',tagClass:'honey',initial:'ع'},
+  {name:'نهال شوقي',loc:'الزقازيق',text:'زيت بمعنى الكلمة، حاسة إنه طازج ومش مخزّن من زمان.',product:'زيت الزيتون',tagClass:'oil',initial:'ن'},
+  {name:'فادي مرسي',loc:'القاهرة',text:'أول مرة أحس إن في فرق حقيقي بين الزيت ده والزيوت اللي في السوبر ماركت.',product:'زيت الزيتون',tagClass:'oil',initial:'ف'},
+  {name:'إسراء ياسر',loc:'القاهرة',text:'والدتي بتاخده للريق كل يوم، بتقولي إنه فرق معاها كتير عن غيره.',product:'عسل حبة البركة',tagClass:'honey',initial:'إ'},
+  {name:'بلال نجيب',loc:'الشرقية',text:'التغليف محترم والتوصيل سريع. العسل أصلي ومالوش طعم سكر زيادة زي العسل التجاري.',product:'عسل حبة البركة',tagClass:'honey',initial:'ب'},
+  {name:'أسماء رزق',loc:'الإسكندرية',text:'جودة عالية فعلاً، استحق السعر بجد. هطلب باكيج أكبر المرة الجاية.',product:'عسل حبة البركة',tagClass:'honey',initial:'أ'},
+  {name:'حسني عبد العاطي',loc:'الإسكندرية',text:'باكيج سيناء يستاهل كل قرش فيه، المنتجين أصليين 100%.',product:'باكيج سيناء',tagClass:'bundle',initial:'ح'},
+  {name:'سميرة محمد',loc:'طنطا',text:'جودة عالية فعلاً، استحق السعر بجد. هطلب باكيج أكبر المرة الجاية.',product:'عسل حبة البركة',tagClass:'honey',initial:'س'},
+  {name:'أحمد رضا',loc:'الزقازيق',text:'أول مرة أثق في عسل أونلاين وفعلاً المنتج كان زي الوصف بالظبط.',product:'عسل حبة البركة',tagClass:'honey',initial:'أ'},
+  {name:'فاطمة عبد الله',loc:'البحيرة',text:'باكيج سيناء يستاهل كل قرش فيه، المنتجين أصليين 100%.',product:'باكيج سيناء',tagClass:'bundle',initial:'ف'}
+];
+
+  const track = document.getElementById('carouselTrack');
+  track.innerHTML = REVIEWS.map(r => `
+    <div class="review-card">
+      <span class="review-product-tag ${r.tagClass}">${r.product}</span>
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">${r.text}</p>
+      <div class="review-reviewer">
+        <div class="review-avatar">${r.initial}</div>
+        <div>
+          <div class="review-name">${r.name}</div>
+          <div class="review-loc">${r.loc}</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  function scrollCarousel(dir) {
+    track.scrollBy({ left: dir * 300, behavior: 'smooth' });
+  }
+
+  // تمرير تلقائي بطيء للكاروسيل
+  let autoScrollPaused = false;
+  track.addEventListener('mouseenter', () => autoScrollPaused = true);
+  track.addEventListener('mouseleave', () => autoScrollPaused = false);
+  track.addEventListener('touchstart', () => autoScrollPaused = true);
+
+  setInterval(() => {
+    if (autoScrollPaused) return;
+    const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 10;
+    if (atEnd) {
+      track.scrollTo({ left: 0, behavior: 'smooth' });
+    } else {
+      track.scrollBy({ left: 300, behavior: 'smooth' });
+    }
+  }, 3500);
+</script>
+
+</body>
+</html>
