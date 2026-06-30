@@ -19,9 +19,13 @@
   }
   html { scroll-behavior: smooth; }
   body { font-family: 'Tajawal', sans-serif; background: var(--black); color: var(--cream); overflow-x: hidden; }
+  .page-content { padding-top: 0; transition: padding-top .4s ease; }
 
+  .top-fixed {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  }
   nav {
-    position: fixed; top: 0; width: 100%; z-index: 100;
+    width: 100%;
     padding: 16px 32px;
     display: flex; align-items: center; justify-content: space-between;
     background: rgba(13,13,13,0.96); border-bottom: 1px solid rgba(201,168,76,0.15);
@@ -37,17 +41,22 @@
 
   .urgency-bar {
     background: linear-gradient(135deg, var(--red), #922B21);
-    padding: 14px 24px; text-align: center;
-    font-size: 0.95rem; font-weight: 700; color: var(--white);
+    padding: 11px 24px; text-align: center;
+    font-size: 0.92rem; font-weight: 700; color: var(--white);
+    transition: max-height .4s ease, opacity .4s ease, padding .4s ease;
+    overflow: hidden; max-height: 60px;
   }
+  .urgency-bar.hidden { max-height: 0; opacity: 0; padding-top: 0; padding-bottom: 0; pointer-events: none; }
   .urgency-bar span { color: #FFD700; }
 
   .hero {
     min-height: 100vh;
     display: grid; grid-template-columns: 1fr 1fr;
     align-items: center; gap: 0;
-    padding: 100px 60px 60px;
+    padding-top: calc(var(--header-h, 110px) + 30px);
+    padding-left: 60px; padding-right: 60px; padding-bottom: 60px;
     position: relative; overflow: hidden;
+    transition: padding-top .4s ease;
   }
   .hero::before {
     content: '';
@@ -240,6 +249,46 @@
   .reviewer-name { font-size: 0.88rem; font-weight: 700; color: var(--white); }
   .reviewer-loc  { font-size: 0.75rem; color: rgba(245,240,232,0.4); }
 
+  /* GALLERY + UGC */
+  .gallery-section { padding: 90px 24px; }
+  .gallery-grid {
+    max-width: 1100px; margin: 0 auto 64px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px;
+  }
+  .gallery-item {
+    border-radius: 16px; overflow: hidden; aspect-ratio: 1;
+    border: 1px solid rgba(201,168,76,0.15);
+  }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
+  .gallery-item:hover img { transform: scale(1.06); }
+
+  .ugc-label {
+    text-align: center; font-size: 0.85rem; color: rgba(245,240,232,0.5);
+    margin-bottom: 24px;
+  }
+  .ugc-row {
+    display: flex; gap: 16px; overflow-x: auto; padding: 8px 24px 24px;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+  .ugc-row::-webkit-scrollbar { height: 6px; }
+  .ugc-row::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); border-radius: 10px; }
+  .ugc-card {
+    flex: 0 0 auto; width: 220px; scroll-snap-align: start;
+    border-radius: 18px; overflow: hidden;
+    border: 1px solid rgba(201,168,76,0.2);
+    background: rgba(255,255,255,0.03);
+  }
+  .ugc-video {
+    width: 100%; aspect-ratio: 9/16; object-fit: cover;
+    display: block; background: #111;
+  }
+  .ugc-caption {
+    padding: 12px 14px; font-size: 0.82rem; color: rgba(245,240,232,0.7);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .ugc-caption .ugc-name { font-weight: 700; color: var(--gold); }
+
   .order-section { padding: 90px 24px; max-width: 640px; margin: 0 auto; }
   .form-group { margin-bottom: 18px; }
   .form-group label { display: block; font-size: 0.82rem; font-weight: 700; color: var(--gold); margin-bottom: 7px; letter-spacing: 1px; }
@@ -340,6 +389,7 @@
 </head>
 <body>
 
+<div class="top-fixed">
 <nav>
   <div class="nav-logo">كنوز الفيروز</div>
   <button class="nav-cta" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">اطلب الآن</button>
@@ -347,6 +397,7 @@
 
 <div class="urgency-bar">
   عرض حصري لفترة محدودة — <span>شحن مجاني</span> على جميع الطلبات هذا الأسبوع
+</div>
 </div>
 
 <section class="hero">
@@ -397,58 +448,6 @@
         <li>حموضة أقل من 0.8% — معيار الجودة العالمي</li>
       </ul>
     </div>
-  </div>
-</section>
-
-<section class="offers" id="offers">
-  <div class="section-eyebrow reveal">العروض الحصرية</div>
-  <h2 class="section-title reveal">اختار عرضك</h2>
-  <div class="offers-grid">
-
-    <div class="offer-card reveal">
-      <span class="offer-tag">زيت الزيتون</span>
-      <img class="offer-img"
-           src="https://images.unsplash.com/photo-1515955529775-c50cb8748a39?w=600&q=80"
-           alt="زيت زيتون بكر ممتاز كنوز الفيروز">
-      <h3>عرض الزيت الأصيل</h3>
-      <p class="offer-desc">زجاجة زيت زيتون بكر ممتاز من مزارع سيناء — عصر بارد، طبيعي 100%.</p>
-      <ul class="offer-includes">
-        <li>زيت زيتون 500مل بكر ممتاز</li>
-        <li>عصر بارد — بدون إضافات</li>
-        <li>شحن لجميع المحافظات</li>
-        <li>دفع عند الاستلام</li>
-      </ul>
-      <div class="offer-price-row">
-        <div class="offer-price">١٨٠ جنيه</div>
-        <div class="offer-old">٢٤٠ جنيه</div>
-      </div>
-      <div class="offer-save">وفّر ٦٠ جنيه</div>
-      <a href="#order" class="offer-btn" onclick="selectOffer(1)">اطلب الآن</a>
-    </div>
-
-    <div class="offer-card featured reveal">
-      <div class="offer-ribbon">الأكثر طلباً</div>
-      <span class="offer-tag">باكيج سيناء</span>
-      <img class="offer-img"
-           src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=600&q=80"
-           alt="باكيج سيناء زيت وعسل كنوز الفيروز">
-      <h3>باكيج الصحة المتكامل</h3>
-      <p class="offer-desc">زيت وعسل من سيناء في باكيج واحد — أفضل قيمة وتوفير في الشحن.</p>
-      <ul class="offer-includes">
-        <li>زيت زيتون بكر ممتاز 500مل</li>
-        <li>عسل حبة البركة 500جم</li>
-        <li>توصيل مجاني لباب البيت</li>
-        <li>دفع عند الاستلام</li>
-        <li>تغليف هدية مميز</li>
-      </ul>
-      <div class="offer-price-row">
-        <div class="offer-price">٤٥٠ جنيه</div>
-        <div class="offer-old">٥٨٠ جنيه</div>
-      </div>
-      <div class="offer-save">وفّر ١٣٠ جنيه + شحن مجاني</div>
-      <a href="#order" class="offer-btn green" onclick="selectOffer(2)">اطلب الباكيج</a>
-    </div>
-
   </div>
 </section>
 
@@ -516,6 +515,106 @@
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="gallery-section">
+  <div class="section-eyebrow reveal">المعرض</div>
+  <h2 class="section-title reveal">شاهد المنتج عن قرب</h2>
+
+  <div class="gallery-grid">
+    <div class="gallery-item reveal">
+      <img src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=500&q=80" alt="زيت زيتون كنوز الفيروز - صورة المنتج">
+    </div>
+    <div class="gallery-item reveal">
+      <img src="https://images.unsplash.com/photo-1515955529775-c50cb8748a39?w=500&q=80" alt="زيت زيتون كنوز الفيروز - تفاصيل التغليف">
+    </div>
+    <div class="gallery-item reveal">
+      <img src="https://images.unsplash.com/photo-1593001874117-c99c800e3eb7?w=500&q=80" alt="ثمار الزيتون من مزارع سيناء">
+    </div>
+    <div class="gallery-item reveal">
+      <img src="https://images.unsplash.com/photo-1611171711912-9e2bdc4be73a?w=500&q=80" alt="باكيج كنوز الفيروز كامل">
+    </div>
+  </div>
+
+  <p class="ugc-label reveal">ماذا يقول عملاؤنا — فيديوهات حقيقية</p>
+  <div class="ugc-row">
+    <div class="ugc-card reveal">
+      <video class="ugc-video" controls preload="metadata" poster="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400&q=80">
+        <source src="" type="video/mp4">
+      </video>
+      <div class="ugc-caption"><span class="ugc-name">@mariam.k</span> تجربتي مع الزيت 🫒</div>
+    </div>
+    <div class="ugc-card reveal">
+      <video class="ugc-video" controls preload="metadata" poster="https://images.unsplash.com/photo-1515955529775-c50cb8748a39?w=400&q=80">
+        <source src="" type="video/mp4">
+      </video>
+      <div class="ugc-caption"><span class="ugc-name">@ahmed_reda</span> وصل سريع وجودة عالية</div>
+    </div>
+    <div class="ugc-card reveal">
+      <video class="ugc-video" controls preload="metadata" poster="https://images.unsplash.com/photo-1593001874117-c99c800e3eb7?w=400&q=80">
+        <source src="" type="video/mp4">
+      </video>
+      <div class="ugc-caption"><span class="ugc-name">@fatma.abdullah</span> طعم مختلف تماماً</div>
+    </div>
+    <div class="ugc-card reveal">
+      <video class="ugc-video" controls preload="metadata" poster="https://images.unsplash.com/photo-1611171711912-9e2bdc4be73a?w=400&q=80">
+        <source src="" type="video/mp4">
+      </video>
+      <div class="ugc-caption"><span class="ugc-name">@samira.m</span> أنصح بيه بجد</div>
+    </div>
+  </div>
+</section>
+
+<section class="offers" id="offers">
+  <div class="section-eyebrow reveal">العروض الحصرية</div>
+  <h2 class="section-title reveal">اختار عرضك</h2>
+  <div class="offers-grid">
+
+    <div class="offer-card reveal">
+      <span class="offer-tag">زيت الزيتون</span>
+      <img class="offer-img"
+           src="https://images.unsplash.com/photo-1515955529775-c50cb8748a39?w=600&q=80"
+           alt="زيت زيتون بكر ممتاز كنوز الفيروز">
+      <h3>عرض الزيت الأصيل</h3>
+      <p class="offer-desc">زجاجة زيت زيتون بكر ممتاز من مزارع سيناء — عصر بارد، طبيعي 100%.</p>
+      <ul class="offer-includes">
+        <li>زيت زيتون 500مل بكر ممتاز</li>
+        <li>عصر بارد — بدون إضافات</li>
+        <li>شحن لجميع المحافظات</li>
+        <li>دفع عند الاستلام</li>
+      </ul>
+      <div class="offer-price-row">
+        <div class="offer-price">١٨٠ جنيه</div>
+        <div class="offer-old">٢٤٠ جنيه</div>
+      </div>
+      <div class="offer-save">وفّر ٦٠ جنيه</div>
+      <a href="#order" class="offer-btn" onclick="selectOffer(1)">اطلب الآن</a>
+    </div>
+
+    <div class="offer-card featured reveal">
+      <div class="offer-ribbon">الأكثر طلباً</div>
+      <span class="offer-tag">باكيج سيناء</span>
+      <img class="offer-img"
+           src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=600&q=80"
+           alt="باكيج سيناء زيت وعسل كنوز الفيروز">
+      <h3>باكيج الصحة المتكامل</h3>
+      <p class="offer-desc">زيت وعسل من سيناء في باكيج واحد — أفضل قيمة وتوفير في الشحن.</p>
+      <ul class="offer-includes">
+        <li>زيت زيتون بكر ممتاز 500مل</li>
+        <li>عسل حبة البركة 500جم</li>
+        <li>توصيل مجاني لباب البيت</li>
+        <li>دفع عند الاستلام</li>
+        <li>تغليف هدية مميز</li>
+      </ul>
+      <div class="offer-price-row">
+        <div class="offer-price">٤٥٠ جنيه</div>
+        <div class="offer-old">٥٨٠ جنيه</div>
+      </div>
+      <div class="offer-save">وفّر ١٣٠ جنيه + شحن مجاني</div>
+      <a href="#order" class="offer-btn green" onclick="selectOffer(2)">اطلب الباكيج</a>
+    </div>
+
   </div>
 </section>
 
@@ -619,6 +718,31 @@
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(r => io.observe(r));
+
+  // Measure fixed header height and expose as CSS var
+  const topFixed = document.querySelector('.top-fixed');
+  function syncHeaderHeight() {
+    document.documentElement.style.setProperty('--header-h', topFixed.offsetHeight + 'px');
+  }
+  syncHeaderHeight();
+  window.addEventListener('resize', syncHeaderHeight);
+  topFixed.addEventListener('transitionend', syncHeaderHeight);
+
+  // Hide urgency bar when order section is visible
+  const urgencyBar = document.querySelector('.urgency-bar');
+  const orderSection = document.getElementById('order');
+  const orderObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        urgencyBar.classList.add('hidden');
+      } else {
+        urgencyBar.classList.remove('hidden');
+      }
+      setTimeout(syncHeaderHeight, 50);
+      setTimeout(syncHeaderHeight, 450);
+    });
+  }, { threshold: 0.1 });
+  orderObserver.observe(orderSection);
 
   const OFFERS = {
     1: { name: 'عرض الزيت 500مل',          price: 180 },
