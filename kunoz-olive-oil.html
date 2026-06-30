@@ -307,6 +307,25 @@
   .form-group select option { background: #1a1a1a; }
   .form-group textarea { resize: vertical; min-height: 80px; }
 
+  /* حالة الخطأ في الفورم */
+  .form-group input.error,
+  .form-group select.error,
+  .form-group textarea.error {
+    border-color: #E74C3C;
+    background: rgba(231,76,60,0.06);
+    animation: shake .35s ease;
+  }
+  .field-error-msg {
+    display: none;
+    color: #E74C3C; font-size: 0.78rem; margin-top: 6px;
+  }
+  .field-error-msg.show { display: block; }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+
   .offer-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
   .offer-tab {
     border: 2px solid rgba(201,168,76,0.2); border-radius: 14px;
@@ -678,10 +697,12 @@
     <div class="form-group">
       <label>الاسم الكامل</label>
       <input type="text" id="fname" placeholder="محمد أحمد" autocomplete="name" required>
+      <div class="field-error-msg" id="fname-error">من فضلك اكتب الاسم</div>
     </div>
     <div class="form-group">
       <label>رقم الهاتف</label>
       <input type="tel" id="fphone" placeholder="01xxxxxxxxx" inputmode="numeric" autocomplete="tel" maxlength="11" required>
+      <div class="field-error-msg" id="fphone-error">تأكد من رقم الهاتف (11 رقم، يبدأ بـ 010 أو 011 أو 012 أو 015)</div>
     </div>
     <div class="form-group">
       <label>المحافظة</label>
@@ -692,15 +713,14 @@
         <option>بورسعيد</option><option>الإسماعيلية</option><option>السويس</option>
         <option>الشرقية</option><option>الدقهلية</option><option>الغربية</option>
         <option>المنوفية</option><option>البحيرة</option><option>كفر الشيخ</option>
-        <option>دمياط</option><option>شمال سيناء</option><option>جنوب سيناء</option>
-        <option>أسيوط</option><option>سوهاج</option><option>قنا</option>
-        <option>الأقصر</option><option>أسوان</option><option>المنيا</option>
-        <option>بني سويف</option><option>الفيوم</option><option>أخرى</option>
+        <option>دمياط</option><option>أخرى</option>
       </select>
+      <div class="field-error-msg" id="fgov-error">من فضلك اختر المحافظة</div>
     </div>
     <div class="form-group">
       <label>العنوان بالتفصيل</label>
       <textarea id="faddress" placeholder="الشارع، المنطقة، رقم المبنى..."></textarea>
+      <div class="field-error-msg" id="faddress-error">من فضلك اكتب العنوان بالتفصيل</div>
     </div>
     <div class="form-group">
       <label>طريقة الدفع</label>
@@ -791,7 +811,12 @@
     if (utmId || utmSource || utmCampaign) {
       return [utmSource, utmCampaign, utmId].filter(Boolean).join(' | ');
     }
-    return document.referrer || 'مباشر';
+    // تجاهل أي referrer من نفس الموقع (زي صفحة الشكر) عشان منسجلش الموقع نفسه كمصدر
+    const ref = document.referrer;
+    if (!ref || ref.includes(window.location.hostname)) {
+      return 'مباشر';
+    }
+    return ref;
   }
 
   function selectOffer(id) {
@@ -809,7 +834,12 @@
     document.getElementById('orderSummary').textContent = qty + ' x ' + offer.name;
   }
 
+  let isSubmitting = false;
+
   async function submitOrder() {
+    if (isSubmitting) return; // قفل فوري يمنع أي ضغطة تانية لحد ما الأولى تخلص
+    isSubmitting = true;
+
     const name    = document.getElementById('fname').value.trim();
     const phone   = document.getElementById('fphone').value.trim();
     const gov     = document.getElementById('fgov').value;
@@ -818,14 +848,36 @@
     const payment = document.getElementById('fpayment').value;
     const offer   = OFFERS[currentOffer];
 
-    if (!name || !phone || !gov || !address) {
-      alert('من فضلك اكمل جميع البيانات المطلوبة');
-      return;
-    }
+    // تنظيف أي تظليل أحمر قديم
+    ['fname','fphone','fgov','faddress'].forEach(id => {
+      document.getElementById(id).classList.remove('error');
+      document.getElementById(id + '-error').classList.remove('show');
+    });
 
     const phoneClean = phone.replace(/[^0-9]/g, '');
-    if (!/^01[0-2,5]\d{8}$/.test(phoneClean)) {
-      alert('من فضلك تأكد من رقم الهاتف (11 رقم، يبدأ بـ 010 أو 011 أو 012 أو 015)');
+    const phoneValid = /^01[0-2,5]\d{8}$/.test(phoneClean);
+
+    const fields = [
+      { id: 'fname',    valid: !!name },
+      { id: 'fphone',   valid: !!phone && phoneValid },
+      { id: 'fgov',     valid: !!gov },
+      { id: 'faddress', valid: !!address }
+    ];
+
+    let firstInvalid = null;
+    fields.forEach(f => {
+      if (!f.valid) {
+        const el = document.getElementById(f.id);
+        el.classList.add('error');
+        document.getElementById(f.id + '-error').classList.add('show');
+        if (!firstInvalid) firstInvalid = el;
+      }
+    });
+
+    if (firstInvalid) {
+      firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      firstInvalid.focus();
+      isSubmitting = false;
       return;
     }
 
@@ -861,9 +913,23 @@
       window.location.href = 'thank-you.html?' + params.toString();
     } catch(e) {
       btn.disabled = false; btn.textContent = 'تأكيد الطلب';
+      isSubmitting = false;
       alert('حدث خطأ، حاول مرة أخرى');
     }
   }
+
+  // إزالة التظليل الأحمر فور ما العميل يبدأ يصحح الخانة
+  ['fname','fphone','fgov','faddress'].forEach(id => {
+    const el = document.getElementById(id);
+    el.addEventListener('input', () => {
+      el.classList.remove('error');
+      document.getElementById(id + '-error').classList.remove('show');
+    });
+    el.addEventListener('change', () => {
+      el.classList.remove('error');
+      document.getElementById(id + '-error').classList.remove('show');
+    });
+  });
 </script>
 </body>
 </html>
