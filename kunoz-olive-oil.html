@@ -950,10 +950,10 @@ src="https://www.facebook.com/tr?id=2165511077625659&ev=PageView&noscript=1"
     const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwQUvlrFS3UZPyess2u6Ol9Ng1T9N-Vc3IuAhnSRwbyj7iNgNnCl5kZNkodnpIBgliPZw/exec';
     const orderId = Math.floor(100000 + Math.random()*900000);
 
-    // مهلة قصوى 6 ثواني لتسجيل الطلب في الشيت — لو حصل تأخير أو حجب (Adblocker وغيره)
+    // مهلة قصوى 12 ثانية لتسجيل الطلب في الشيت — لو حصل تأخير أو حجب (Adblocker وغيره)
     // ما ينفعش نسيب العميل واقف على "جارٍ الإرسال" للأبد، فبنكمل للصفحة التالية في كل الأحوال
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 6000);
+    const timeoutId = setTimeout(() => controller.abort(), 12000);
 
     const { fbp, fbc } = getFbParams();
 
