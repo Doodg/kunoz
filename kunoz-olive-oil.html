@@ -1,6 +1,23 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '2165511077625659');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=2165511077625659&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>كنوز الفيروز – زيت الزيتون بكر ممتاز من سيناء</title>
@@ -891,6 +908,15 @@
     const btn = document.getElementById('submitBtn');
     btn.disabled = true; btn.textContent = 'جارٍ الإرسال...';
 
+    // Facebook Pixel - InitiateCheckout
+    fbq('track', 'InitiateCheckout', {
+      value: total,
+      currency: 'EGP',
+      content_name: offer.name,
+      content_type: 'product',
+      num_items: qty
+    });
+
     const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwQUvlrFS3UZPyess2u6Ol9Ng1T9N-Vc3IuAhnSRwbyj7iNgNnCl5kZNkodnpIBgliPZw/exec';
     const orderId = Math.floor(100000 + Math.random()*900000);
     const total = qty * offer.price;
@@ -937,6 +963,25 @@
       document.getElementById(id + '-error').classList.remove('show');
     });
   });
+</script>
+<script>
+fbq('track', 'ViewContent', {
+  content_name: 'زيت الزيتون بكر ممتاز',
+  content_category: 'زيت زيتون',
+  content_ids: ['olive-oil-500ml'],
+  content_type: 'product',
+  currency: 'EGP',
+  value: 180
+});
+
+  // تتبع ضغطات زرار الواتساب على فيسبوك
+  document.querySelector('.wa-float')?.addEventListener('click', function() {
+    fbq('track', 'Contact', {
+      content_name: 'WhatsApp Click',
+      content_category: 'واتساب'
+    });
+  });
+
 </script>
 </body>
 </html>
