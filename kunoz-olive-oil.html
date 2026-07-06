@@ -924,6 +924,12 @@ src="https://www.facebook.com/tr?id=2165511077625659&ev=PageView&noscript=1"
     const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwQUvlrFS3UZPyess2u6Ol9Ng1T9N-Vc3IuAhnSRwbyj7iNgNnCl5kZNkodnpIBgliPZw/exec';
     const orderId = Math.floor(100000 + Math.random()*900000);
 
+    // مهلة قصوى 6 ثواني لتسجيل الطلب في الشيت — لو حصل تأخير أو حجب (Adblocker وغيره)
+    // ما ينفعش نسيب العميل واقف على "جارٍ الإرسال" للأبد، فبنكمل للصفحة التالية في كل الأحوال
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 6000);
+
+    let sheetSaveFailed = false;
     try {
       await fetch(SHEET_URL, {
         method: 'POST',
@@ -939,20 +945,38 @@ src="https://www.facebook.com/tr?id=2165511077625659&ev=PageView&noscript=1"
           total,
           name, phone, gov, address, payment,
           source: getAdSource()
-        })
+        }),
+        signal: controller.signal
       });
-      const params = new URLSearchParams({
-        id: orderId,
-        offer: offer.name,
-        qty: qty,
-        total: total
-      });
-      window.location.href = 'thank-you.html?' + params.toString();
     } catch(e) {
-      btn.disabled = false; btn.textContent = 'تأكيد الطلب';
-      isSubmitting = false;
-      alert('حدث خطأ، حاول مرة أخرى');
+      // فشل التسجيل (Adblocker أو مشكلة شبكة) — هنعمل نسخة احتياطية عبر واتساب تحت
+      sheetSaveFailed = true;
+    } finally {
+      clearTimeout(timeoutId);
     }
+
+    // نسخة احتياطية: لو الشيت فشل، افتح واتساب بتفاصيل الطلب جاهزة عشان الطلب ميضيعش
+    if (sheetSaveFailed) {
+      const waMessage =
+        `طلب جديد #${orderId}\n` +
+        `المنتج: ${offer.name}\n` +
+        `الكمية: ${qty}\n` +
+        `الإجمالي: ${total} جنيه\n` +
+        `الاسم: ${name}\n` +
+        `الهاتف: ${phone}\n` +
+        `المحافظة: ${gov}\n` +
+        `العنوان: ${address}\n` +
+        `الدفع: ${payment}`;
+      window.open('https://wa.me/201000000000?text=' + encodeURIComponent(waMessage), '_blank');
+    }
+
+    const params = new URLSearchParams({
+      id: orderId,
+      offer: offer.name,
+      qty: qty,
+      total: total
+    });
+    window.location.href = 'thank-you.html?' + params.toString();
   }
 
   // إزالة التظليل الأحمر فور ما العميل يبدأ يصحح الخانة
