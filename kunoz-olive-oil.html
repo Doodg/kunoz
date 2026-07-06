@@ -853,11 +853,37 @@ src="https://www.facebook.com/tr?id=2165511077625659&ev=PageView&noscript=1"
 
   let isSubmitting = false;
 
+  // لو المستخدم دوس "رجوع" من صفحة الشكر، بعض المتصفحات (bfcache) بترجع
+  // الصفحة بحالتها القديمة زي ما هي (زرار معطّل وعليه "جارٍ الإرسال...").
+  // نرجّع الزرار لحالته الطبيعية عشان العميل يقدر يطلب تاني من غير ما يعمل Refresh.
+  window.addEventListener('pageshow', function (event) {
+    if (event.persisted) {
+      isSubmitting = false;
+      const btn = document.getElementById('submitBtn');
+      if (btn) { btn.disabled = false; btn.textContent = 'تأكيد الطلب'; }
+    }
+  });
+
   // تحويل الأرقام العربية (٠١٢٣٤٥٦٧٨٩) والفارسية (۰۱۲۳۴۵۶۷۸۹) لأرقام إنجليزية
   function toWesternDigits(str) {
     const arabicMap  = { '٠':'0','١':'1','٢':'2','٣':'3','٤':'4','٥':'5','٦':'6','٧':'7','٨':'8','٩':'9' };
     const persianMap = { '۰':'0','۱':'1','۲':'2','۳':'3','۴':'4','۵':'5','۶':'6','۷':'7','۸':'8','۹':'9' };
     return str.replace(/[٠-٩۰-۹]/g, d => arabicMap[d] || persianMap[d] || d);
+  }
+
+  // قراءة كوكيز فيسبوك (_fbp/_fbc) عشان نبعتها للسيرفر ونحسّن جودة مطابقة حدث Purchase في Meta CAPI
+  function getCookie(name) {
+    const match = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+    return match ? decodeURIComponent(match.pop()) : '';
+  }
+  function getFbParams() {
+    const fbp = getCookie('_fbp');
+    let fbc = getCookie('_fbc');
+    if (!fbc) {
+      const fbclid = new URLSearchParams(window.location.search).get('fbclid');
+      if (fbclid) fbc = 'fb.1.' + Date.now() + '.' + fbclid;
+    }
+    return { fbp, fbc };
   }
 
   async function submitOrder() {
@@ -929,6 +955,8 @@ src="https://www.facebook.com/tr?id=2165511077625659&ev=PageView&noscript=1"
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 6000);
 
+    const { fbp, fbc } = getFbParams();
+
     let sheetSaveFailed = false;
     try {
       await fetch(SHEET_URL, {
@@ -944,7 +972,9 @@ src="https://www.facebook.com/tr?id=2165511077625659&ev=PageView&noscript=1"
           unit_price: offer.price,
           total,
           name, phone, gov, address, payment,
-          source: getAdSource()
+          source: getAdSource(),
+          fbp, fbc,
+          pageUrl: window.location.href
         }),
         signal: controller.signal
       });

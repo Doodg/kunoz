@@ -194,13 +194,16 @@ src="https://www.facebook.com/tr?id=2165511077625659&ev=PageView&noscript=1"
   const total = parseFloat(urlParams.get('total')) || 0;
   const offer = urlParams.get('offer') || '';
   const qty = parseInt(urlParams.get('qty')) || 1;
+  const capiOrderId = urlParams.get('id') || '';
+  // event_id مطابق لللي بيتبعت من Apps Script لـ Meta CAPI، عشان فيسبوك يدمج
+  // الحدثين (متصفح + سيرفر) في حدث واحد بدل ما يحسبهم مرتين
   fbq('track', 'Purchase', {
     value: total,
     currency: 'EGP',
     content_name: decodeURIComponent(offer),
     content_type: 'product',
     num_items: qty
-  });
+  }, { eventID: String(capiOrderId) });
 </script>
 </body>
 </html>
