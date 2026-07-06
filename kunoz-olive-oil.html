@@ -908,6 +908,8 @@ src="https://www.facebook.com/tr?id=2165511077625659&ev=PageView&noscript=1"
     const btn = document.getElementById('submitBtn');
     btn.disabled = true; btn.textContent = 'جارٍ الإرسال...';
 
+    const total = qty * offer.price;
+
     // Facebook Pixel - InitiateCheckout
     if (typeof fbq !== 'undefined') {
       fbq('track', 'InitiateCheckout', {
