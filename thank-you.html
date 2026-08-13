@@ -21,6 +21,10 @@ src="https://www.facebook.com/tr?id=2165511077625659&ev=PageView&noscript=1"
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>تم استلام طلبك - كنوز الفيروز</title>
+<meta name="description" content="تم استلام طلبك بنجاح في كنوز الفيروز. فريقنا هيتواصل معاك قريباً لتأكيد الطلب والشحن.">
+<meta name="robots" content="noindex, follow">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJz48cmVjdCB3aWR0aD0nMTAwJyBoZWlnaHQ9JzEwMCcgcng9JzIwJyBmaWxsPScjMEQwRDBEJy8+PHBvbHlnb24gcG9pbnRzPSc1MCwxNSA4MiwzMi41IDgyLDY3LjUgNTAsODUgMTgsNjcuNSAxOCwzMi41JyBmaWxsPSdub25lJyBzdHJva2U9JyNDOUE4NEMnIHN0cm9rZS13aWR0aD0nNicvPjxjaXJjbGUgY3g9JzUwJyBjeT0nNTAnIHI9JzEwJyBmaWxsPScjQzlBODRDJy8+PC9zdmc+">
+<meta name="theme-color" content="#0D0D0D">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
 
 <!-- Facebook Pixel Conversion Event (placeholder - استبدله بالـ Pixel ID بتاعك) -->
@@ -186,24 +190,18 @@ src="https://www.facebook.com/tr?id=2165511077625659&ev=PageView&noscript=1"
   document.getElementById('orderId').textContent = '#' + orderId;
   document.getElementById('sumProduct').textContent = decodeURIComponent(product);
   document.getElementById('sumQty').textContent = qty;
-  document.getElementById('sumTotal').textContent = total ? (total + ' جنيه') : '—';
-</script>
-<script>
+  document.getElementById('sumTotal').textContent = total ? (parseFloat(total).toLocaleString('ar-EG') + ' جنيه') : '—';
+
   // Facebook Pixel Purchase Event
-  const urlParams = new URLSearchParams(window.location.search);
-  const total = parseFloat(urlParams.get('total')) || 0;
-  const offer = urlParams.get('offer') || '';
-  const qty = parseInt(urlParams.get('qty')) || 1;
-  const capiOrderId = urlParams.get('id') || '';
   // event_id مطابق لللي بيتبعت من Apps Script لـ Meta CAPI، عشان فيسبوك يدمج
   // الحدثين (متصفح + سيرفر) في حدث واحد بدل ما يحسبهم مرتين
   fbq('track', 'Purchase', {
-    value: total,
+    value: parseFloat(total) || 0,
     currency: 'EGP',
-    content_name: decodeURIComponent(offer),
+    content_name: decodeURIComponent(product),
     content_type: 'product',
-    num_items: qty
-  }, { eventID: String(capiOrderId) });
+    num_items: parseInt(qty) || 1
+  }, { eventID: String(orderId) });
 </script>
 </body>
 </html>
