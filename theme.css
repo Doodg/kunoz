@@ -84,7 +84,7 @@ nav {
   font-family: 'Aref Ruqaa', serif; font-size: 1.7rem; font-weight: 700;
   color: var(--gold); text-decoration: none; letter-spacing: .5px; text-align: center;
 }
-.nav-links { display: flex; gap: 22px; justify-content: center; padding: 10px 0 4px; }
+.nav-links { display: flex; gap: 22px; justify-content: center; padding: 10px 0 14px; background: var(--black); flex-wrap: wrap; }
 .nav-links a {
   color: rgba(243,240,232,0.75); text-decoration: none; font-size: 0.88rem; font-weight: 700;
   padding-bottom: 4px; border-bottom: 2px solid transparent; transition: color .2s, border-color .2s;
@@ -404,7 +404,10 @@ nav {
 @media (max-width: 600px) {
   nav { padding: 12px 18px; }
   .nav-links { gap: 14px; flex-wrap: wrap; }
-  .hero { padding: 150px 20px 40px; }
+  .hero { padding-top: 250px; padding-inline: 20px; padding-bottom: 40px; }
+  .pdp-wrap { padding-top: 250px; }
+  .policy-page { padding-top: 250px; }
+  .cart-page { padding-top: 250px; }
   .product-grid { grid-template-columns: 1fr; }
   .feature-grid { grid-template-columns: 1fr; }
   .trust-row { grid-template-columns: 1fr; }
