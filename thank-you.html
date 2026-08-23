@@ -32,11 +32,11 @@ src="https://www.facebook.com/tr?id=2165511077625659&ev=PageView&noscript=1"
 <meta property="og:title" content="تم استلام طلبك بنجاح! – كنوز الفيروز">
 <meta property="og:description" content="تم استلام طلبك بنجاح في كنوز الفيروز. فريقنا هيتواصل معاك قريباً لتأكيد الطلب والشحن.">
 <meta property="og:url" content="https://kunoz-elfayrouz.com/thank-you.html">
-<meta property="og:image" content="https://images.unsplash.com/photo-1471943311424-646960669fbc?w=1200&q=80">
+<meta property="og:image" content="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=1200&q=80">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="تم استلام طلبك بنجاح! – كنوز الفيروز">
 <meta name="twitter:description" content="تم استلام طلبك بنجاح في كنوز الفيروز. فريقنا هيتواصل معاك قريباً لتأكيد الطلب والشحن.">
-<meta name="twitter:image" content="https://images.unsplash.com/photo-1471943311424-646960669fbc?w=1200&q=80">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=1200&q=80">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://connect.facebook.net">
@@ -128,7 +128,8 @@ src="https://www.facebook.com/tr?id=2165511077625659&ev=PageView&noscript=1"
 
   if (order && Array.isArray(order.items) && order.items.length) {
     document.getElementById('summaryItems').innerHTML = order.items.map(item => {
-      const label = item.name + ' × ' + item.qty;
+      const opts = Object.values(item.options || {}).filter(Boolean).join(' · ');
+      const label = item.name + (opts ? ' (' + opts + ')' : '') + ' × ' + item.qty;
       return `<div class="summary-row"><span>${label}</span><span>${(item.unitPrice * item.qty).toFixed(2)} جنيه</span></div>`;
     }).join('');
     document.getElementById('sumSubtotal').textContent = order.subtotal.toFixed(2) + ' جنيه';

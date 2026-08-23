@@ -142,7 +142,7 @@ nav {
 .section-link { font-size: 0.9rem; font-weight: 800; color: var(--olive); text-decoration: none; }
 
 /* ---------- Product grid + cards ---------- */
-.product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
 .product-card {
   position: relative; text-decoration: none; color: inherit; display: block;
   background: var(--white); border: 1px solid var(--border-lt); border-radius: 18px; overflow: hidden;
@@ -272,6 +272,18 @@ nav {
 }
 .pdp-qty button { width: 42px; height: 42px; font-size: 1.1rem; font-weight: 800; color: var(--black); background: var(--cream-alt); }
 .pdp-qty span { width: 46px; text-align: center; font-weight: 800; }
+.pdp-select-wrap { position: relative; max-width: 280px; }
+.pdp-select-wrap select {
+  width: 100%; appearance: none; -webkit-appearance: none;
+  background: var(--white); border: 1.5px solid var(--border); border-radius: 10px;
+  padding-block: 13px; padding-inline: 16px 42px; font-family: 'Cairo', sans-serif; font-size: 1rem; color: var(--text-dark);
+  cursor: pointer;
+}
+.pdp-select-wrap::after {
+  content: ''; position: absolute; top: 50%; inset-inline-end: 16px; width: 10px; height: 10px;
+  border-right: 2px solid var(--text-soft); border-bottom: 2px solid var(--text-soft);
+  transform: translateY(-70%) rotate(45deg); pointer-events: none;
+}
 .pdp-actions { display: flex; gap: 12px; margin: 26px 0; }
 .pdp-desc p { color: var(--text-soft); line-height: 2; margin-bottom: 12px; font-size: 0.94rem; }
 .pdp-includes { list-style: none; margin: 18px 0; }
@@ -294,6 +306,7 @@ nav {
 }
 .cart-item-name { font-weight: 800; font-size: 0.95rem; }
 .cart-item-price { font-size: 0.82rem; color: var(--text-faint); margin-top: 3px; }
+.cart-item-opts { font-size: 0.8rem; color: var(--olive); margin-top: 2px; font-weight: 700; }
 .cart-item-qty { display: flex; align-items: center; gap: 0; border: 1.5px solid var(--border); border-radius: 8px; overflow: hidden; }
 .cart-item-qty button { width: 32px; height: 32px; font-weight: 800; background: var(--cream-alt); }
 .cart-item-qty span { width: 32px; text-align: center; font-weight: 700; font-size: 0.9rem; }

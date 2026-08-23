@@ -32,11 +32,11 @@ src="https://www.facebook.com/tr?id=2165511077625659&ev=PageView&noscript=1"
 <meta property="og:title" content="السلة والدفع – كنوز الفيروز">
 <meta property="og:description" content="راجع سلة مشترياتك من كنوز الفيروز وأتمّ طلبك — عرض المنتجات والكمية والسعر، رسوم الشحن، والإجمالي.">
 <meta property="og:url" content="https://kunoz-elfayrouz.com/cart.html">
-<meta property="og:image" content="https://images.unsplash.com/photo-1471943311424-646960669fbc?w=1200&q=80">
+<meta property="og:image" content="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=1200&q=80">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="السلة والدفع – كنوز الفيروز">
 <meta name="twitter:description" content="راجع سلة مشترياتك من كنوز الفيروز وأتمّ طلبك — عرض المنتجات والكمية والسعر، رسوم الشحن، والإجمالي.">
-<meta name="twitter:image" content="https://images.unsplash.com/photo-1471943311424-646960669fbc?w=1200&q=80">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=1200&q=80">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://connect.facebook.net">
@@ -151,10 +151,13 @@ src="https://www.facebook.com/tr?id=2165511077625659&ev=PageView&noscript=1"
     emptyEl.style.display = 'none';
     contentEl.style.display = 'block';
 
-    itemsEl.innerHTML = cart.map((item, i) => `
+    itemsEl.innerHTML = cart.map((item, i) => {
+      const optsText = Object.values(item.options || {}).filter(Boolean).join(' · ');
+      return `
         <div class="cart-item">
           <div class="cart-item-info">
             <div class="cart-item-name">${item.name}</div>
+            ${optsText ? `<div class="cart-item-opts">${optsText}</div>` : ''}
             <div class="cart-item-price">${formatEGP(item.unitPrice)} / وحدة</div>
           </div>
           <div class="cart-item-qty">
@@ -165,7 +168,8 @@ src="https://www.facebook.com/tr?id=2165511077625659&ev=PageView&noscript=1"
           <div class="cart-item-subtotal">${formatEGP(item.unitPrice * item.qty)}</div>
           <button type="button" class="cart-item-remove" onclick="removeItem(${i})" aria-label="حذف من السلة">✕</button>
         </div>
-      `).join('');
+      `;
+    }).join('');
 
     updateSummary();
   }
@@ -310,7 +314,10 @@ src="https://www.facebook.com/tr?id=2165511077625659&ev=PageView&noscript=1"
       fbq('track', 'InitiateCheckout', { value: total, currency: 'EGP', num_items: cartCount(), content_type: 'product' });
     }
 
-    const itemsText = cart.map(i => `- ${i.name} × ${i.qty} = ${(i.unitPrice * i.qty).toFixed(2)} جنيه`).join('\n');
+    const itemsText = cart.map(i => {
+      const opts = Object.values(i.options || {}).filter(Boolean).join('، ');
+      return `- ${i.name}${opts ? ' (' + opts + ')' : ''} × ${i.qty} = ${(i.unitPrice * i.qty).toFixed(2)} جنيه`;
+    }).join('\n');
     const shippingLine = shipping === null ? 'هيتم تحديدها لاحقاً' : shipping.toFixed(2) + ' جنيه';
 
     const waMessage =

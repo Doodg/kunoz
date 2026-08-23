@@ -23,8 +23,10 @@
     updateCartBadge();
   }
 
+  // بنضيف الخيارات (زي الوزن) في المفتاح عشان "1 كيلو" و"نص كيلو" من نفس المنتج
+  // يتحسبوا كسطرين منفصلين في السلة، مش يتلخبطوا في سطر واحد بكمية غلط.
   function cartItemKey(item) {
-    return [item.category, item.name].join('|');
+    return [item.category, item.name, JSON.stringify(item.options || {})].join('|');
   }
 
   function addToCart(item) {
