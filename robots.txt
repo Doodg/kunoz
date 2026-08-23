@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /thank-you.html
+Disallow: /cart.html
 
 Sitemap: https://kunoz-elfayrouz.com/sitemap.xml

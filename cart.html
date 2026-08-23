@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '2165511077625659');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=2165511077625659&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>السلة والدفع – كنوز الفيروز</title>
+<meta name="description" content="راجع سلة مشترياتك من كنوز الفيروز وأتمّ طلبك — عرض المنتجات والكمية والسعر، رسوم الشحن، والإجمالي.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://kunoz-elfayrouz.com/cart.html">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJz48cmVjdCB3aWR0aD0nMTAwJyBoZWlnaHQ9JzEwMCcgcng9JzIwJyBmaWxsPScjMUExQTFBJy8+PHBvbHlnb24gcG9pbnRzPSc1MCwxNSA4MiwzMi41IDgyLDY3LjUgNTAsODUgMTgsNjcuNSAxOCwzMi41JyBmaWxsPSdub25lJyBzdHJva2U9JyNGRkNDMDAnIHN0cm9rZS13aWR0aD0nNicvPjxjaXJjbGUgY3g9JzUwJyBjeT0nNTAnIHI9JzEwJyBmaWxsPScjRkZDQzAwJy8+PC9zdmc+">
+<meta name="theme-color" content="#1a1a1a">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="كنوز الفيروز">
+<meta property="og:locale" content="ar_EG">
+<meta property="og:title" content="السلة والدفع – كنوز الفيروز">
+<meta property="og:description" content="راجع سلة مشترياتك من كنوز الفيروز وأتمّ طلبك — عرض المنتجات والكمية والسعر، رسوم الشحن، والإجمالي.">
+<meta property="og:url" content="https://kunoz-elfayrouz.com/cart.html">
+<meta property="og:image" content="https://images.unsplash.com/photo-1471943311424-646960669fbc?w=1200&q=80">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="السلة والدفع – كنوز الفيروز">
+<meta name="twitter:description" content="راجع سلة مشترياتك من كنوز الفيروز وأتمّ طلبك — عرض المنتجات والكمية والسعر، رسوم الشحن، والإجمالي.">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1471943311424-646960669fbc?w=1200&q=80">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://connect.facebook.net">
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="theme.css" rel="stylesheet">
+<script src="cart.js"></script>
+<script src="theme.js"></script>
+</head>
+<body>
+
+<div class="top-fixed">
+  <div class="announce-bar">منتجات طبيعية 100% من سيناء — دفع عند الاستلام</div>
+  <nav>
+    <div class="nav-side"></div>
+    <a href="index.html" class="nav-logo logo-font">كنوز الفيروز</a>
+    <div class="nav-side" style="justify-content:flex-end;">
+      <a href="index.html" class="nav-icon-btn" aria-label="الرئيسية">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/></svg>
+      </a>
+    </div>
+  </nav>
+</div>
+
+<section class="cart-page">
+  <div class="eyebrow reveal">السلة والدفع</div>
+  <h1 class="section-title reveal">سلة مشترياتك</h1>
+
+  <div id="cartEmpty" class="cart-empty" style="display:none;">
+    <div style="font-size:3.2rem; margin-bottom:16px;">🛒</div>
+    <p style="color:var(--text-soft); margin-bottom:26px;">السلة فاضية دلوقتي — تصفح منتجاتنا وأضف اللي يعجبك</p>
+    <a href="index.html" class="btn btn-gold">تصفح المنتجات</a>
+  </div>
+
+  <div id="cartContent">
+    <div class="cart-items" id="cartItems"></div>
+
+    <div class="cart-summary">
+      <div class="summary-row"><span>المجموع الفرعي</span><span id="cartSubtotalDisplay">—</span></div>
+      <div class="summary-row"><span>رسوم الشحن</span><span id="cartShippingDisplay">—</span></div>
+      <div class="summary-row total"><span>الإجمالي</span><span id="cartTotalDisplay">—</span></div>
+      <p class="shipping-note" id="shippingNote"></p>
+    </div>
+
+    <div class="checkout-form">
+      <h2 style="font-size:1.1rem; font-weight:800; margin-bottom:20px;">بيانات التوصيل</h2>
+      <div class="form-group">
+        <label>الاسم الكامل</label>
+        <input type="text" id="fname" placeholder="محمد أحمد" autocomplete="name" required>
+        <div class="field-error-msg" id="fname-error">من فضلك اكتب الاسم</div>
+      </div>
+      <div style="position:absolute; left:-9999px; top:-9999px; opacity:0; height:0; width:0; overflow:hidden;" aria-hidden="true">
+        <label for="fwebsite">Website</label>
+        <input type="text" id="fwebsite" name="website" tabindex="-1" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label>رقم الهاتف</label>
+        <input type="tel" id="fphone" placeholder="01xxxxxxxxx" inputmode="numeric" autocomplete="tel" maxlength="11" required>
+        <div class="field-error-msg" id="fphone-error">تأكد من رقم الهاتف (11 رقم، يبدأ بـ 010 أو 011 أو 012 أو 015)</div>
+      </div>
+      <div class="form-group">
+        <label>المحافظة</label>
+        <select id="fgov">
+          <option value="">اختر المحافظة</option>
+          <option value="cairo">القاهرة</option><option value="giza">الجيزة</option><option value="alex">الإسكندرية</option><option value="beheira">البحيرة</option><option value="other">أخرى</option>
+        </select>
+        <div class="field-error-msg" id="fgov-error">من فضلك اختر المحافظة</div>
+      </div>
+      <div class="form-group" id="fgovOtherWrap" style="display:none;">
+        <label>اسم المحافظة</label>
+        <input type="text" id="fgovOther" placeholder="اكتب اسم محافظتك">
+        <div class="field-error-msg" id="fgovOther-error">من فضلك اكتب اسم المحافظة (حروف فقط)</div>
+      </div>
+      <div class="form-group">
+        <label>العنوان بالتفصيل</label>
+        <textarea id="faddress" placeholder="الشارع، المنطقة، رقم المبنى..."></textarea>
+        <div class="field-error-msg" id="faddress-error">من فضلك اكتب العنوان بالتفصيل</div>
+      </div>
+      <div class="form-group">
+        <label>طريقة الدفع</label>
+        <div class="payment-fixed">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+          الدفع عند الاستلام
+        </div>
+      </div>
+      <button class="btn btn-gold btn-block" id="submitBtn" onclick="submitCheckout()">تأكيد الطلب</button>
+      <p class="form-note">بياناتك آمنة — الدفع عند الاستلام فقط</p>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-logo logo-font">كنوز الفيروز</div>
+  <div class="footer-social">
+    <a href="#" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+    <a href="#" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12Z"/></svg></a>
+  </div>
+  <p class="footer-copy">كنوز الفيروز 2026 — <a href="https://wa.me/201042030926">واتساب</a></p>
+</footer>
+
+<script>
+  function renderCart() {
+    const cart = getCart();
+    const itemsEl = document.getElementById('cartItems');
+    const emptyEl = document.getElementById('cartEmpty');
+    const contentEl = document.getElementById('cartContent');
+
+    if (cart.length === 0) {
+      emptyEl.style.display = 'block';
+      contentEl.style.display = 'none';
+      return;
+    }
+    emptyEl.style.display = 'none';
+    contentEl.style.display = 'block';
+
+    itemsEl.innerHTML = cart.map((item, i) => `
+        <div class="cart-item">
+          <div class="cart-item-info">
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-price">${formatEGP(item.unitPrice)} / وحدة</div>
+          </div>
+          <div class="cart-item-qty">
+            <button type="button" onclick="changeQty(${i}, -1)" aria-label="تقليل الكمية">−</button>
+            <span>${item.qty}</span>
+            <button type="button" onclick="changeQty(${i}, 1)" aria-label="زيادة الكمية">+</button>
+          </div>
+          <div class="cart-item-subtotal">${formatEGP(item.unitPrice * item.qty)}</div>
+          <button type="button" class="cart-item-remove" onclick="removeItem(${i})" aria-label="حذف من السلة">✕</button>
+        </div>
+      `).join('');
+
+    updateSummary();
+  }
+
+  function changeQty(index, delta) {
+    const cart = getCart();
+    const newQty = cart[index].qty + delta;
+    if (newQty < 1) { removeItem(index); return; }
+    updateCartQty(index, newQty);
+    renderCart();
+  }
+
+  function removeItem(index) {
+    removeFromCart(index);
+    renderCart();
+  }
+
+  function updateSummary() {
+    const subtotal = cartSubtotal();
+    const govCode = document.getElementById('fgov').value;
+    document.getElementById('cartSubtotalDisplay').textContent = formatEGP(subtotal);
+
+    const shippingEl = document.getElementById('cartShippingDisplay');
+    const totalEl = document.getElementById('cartTotalDisplay');
+    const note = document.getElementById('shippingNote');
+
+    if (!govCode) {
+      shippingEl.textContent = '—';
+      totalEl.textContent = formatEGP(subtotal);
+      note.textContent = subtotal > 0 ? 'اختر المحافظة عشان تعرف رسوم الشحن' : '';
+      return;
+    }
+
+    const shipping = shippingFee(subtotal, govCode);
+    if (shipping === null) {
+      shippingEl.textContent = 'هيتم تحديدها لاحقاً';
+      totalEl.textContent = formatEGP(subtotal);
+      note.textContent = 'هنأكدلك رسوم التوصيل لمحافظتك على واتساب بعد ما تبعت الطلب';
+      return;
+    }
+
+    const total = subtotal + shipping;
+    shippingEl.textContent = formatEGP(shipping);
+    totalEl.textContent = formatEGP(total);
+    note.textContent = '';
+  }
+
+  const govSelect = document.getElementById('fgov');
+  const govOtherWrap = document.getElementById('fgovOtherWrap');
+  const govOtherInput = document.getElementById('fgovOther');
+  govSelect.addEventListener('change', () => {
+    govOtherWrap.style.display = govSelect.value === 'other' ? 'block' : 'none';
+    updateSummary();
+  });
+  govOtherInput.addEventListener('input', () => {
+    const filtered = govOtherInput.value.replace(/[^A-Za-z\u0600-\u06FF\s]/g, '');
+    if (filtered !== govOtherInput.value) govOtherInput.value = filtered;
+    govOtherInput.classList.remove('error');
+    document.getElementById('fgovOther-error').classList.remove('show');
+  });
+
+  renderCart();
+
+  const __pageLoadedAt = Date.now();
+  let isSubmitting = false;
+
+  window.addEventListener('pageshow', function (event) {
+    if (event.persisted) {
+      isSubmitting = false;
+      const btn = document.getElementById('submitBtn');
+      if (btn) { btn.disabled = false; btn.textContent = 'تأكيد الطلب'; }
+      renderCart();
+    }
+  });
+
+  function toWesternDigits(str) {
+    const arabicMap  = { '٠':'0','١':'1','٢':'2','٣':'3','٤':'4','٥':'5','٦':'6','٧':'7','٨':'8','٩':'9' };
+    const persianMap = { '۰':'0','۱':'1','۲':'2','۳':'3','۴':'4','۵':'5','۶':'6','۷':'7','۸':'8','۹':'9' };
+    return str.replace(/[٠-٩۰-۹]/g, d => arabicMap[d] || persianMap[d] || d);
+  }
+
+  async function submitCheckout() {
+    if (isSubmitting) return;
+    const cart = getCart();
+    if (cart.length === 0) return;
+    isSubmitting = true;
+
+    const name     = document.getElementById('fname').value.trim();
+    const phone    = toWesternDigits(document.getElementById('fphone').value.trim());
+    const govCode  = document.getElementById('fgov').value;
+    const govOther = document.getElementById('fgovOther').value.trim();
+    const address  = document.getElementById('faddress').value.trim();
+    const payment  = 'الدفع عند الاستلام';
+    const honeypot = document.getElementById('fwebsite').value.trim();
+
+    ['fname','fphone','fgov','fgovOther','faddress'].forEach(id => {
+      document.getElementById(id).classList.remove('error');
+      document.getElementById(id + '-error').classList.remove('show');
+    });
+
+    const phoneClean = phone.replace(/[^0-9]/g, '');
+    const phoneValid = /^01[0-2,5]\d{8}$/.test(phoneClean);
+    const govOtherValid = /^[A-Za-z\u0600-\u06FF\s]+$/.test(govOther);
+
+    const fields = [
+      { id: 'fname',    valid: !!name },
+      { id: 'fphone',   valid: !!phone && phoneValid },
+      { id: 'fgov',     valid: !!govCode },
+      { id: 'faddress', valid: !!address }
+    ];
+    if (govCode === 'other') {
+      fields.push({ id: 'fgovOther', valid: !!govOther && govOtherValid });
+    }
+
+    let firstInvalid = null;
+    fields.forEach(f => {
+      if (!f.valid) {
+        const el = document.getElementById(f.id);
+        el.classList.add('error');
+        document.getElementById(f.id + '-error').classList.add('show');
+        if (!firstInvalid) firstInvalid = el;
+      }
+    });
+
+    if (firstInvalid) {
+      firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      firstInvalid.focus();
+      isSubmitting = false;
+      return;
+    }
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true; btn.textContent = 'جارٍ الإرسال...';
+
+    const subtotal = cartSubtotal();
+    const shipping = shippingFee(subtotal, govCode);
+    const total = subtotal + (shipping || 0);
+    const orderId = Math.floor(100000 + Math.random() * 900000);
+    const govText = govCode === 'other' ? govOther : document.getElementById('fgov').selectedOptions[0].text;
+
+    if (typeof fbq !== 'undefined') {
+      fbq('track', 'InitiateCheckout', { value: total, currency: 'EGP', num_items: cartCount(), content_type: 'product' });
+    }
+
+    const itemsText = cart.map(i => `- ${i.name} × ${i.qty} = ${(i.unitPrice * i.qty).toFixed(2)} جنيه`).join('\n');
+    const shippingLine = shipping === null ? 'هيتم تحديدها لاحقاً' : shipping.toFixed(2) + ' جنيه';
+
+    const waMessage =
+      `طلب جديد #${orderId}\n\n` +
+      `${itemsText}\n\n` +
+      `المجموع الفرعي: ${subtotal.toFixed(2)} جنيه\n` +
+      `الشحن: ${shippingLine}\n` +
+      `الإجمالي: ${total.toFixed(2)} جنيه\n\n` +
+      `الاسم: ${name}\n` +
+      `الهاتف: ${phone}\n` +
+      `المحافظة: ${govText}\n` +
+      `العنوان: ${address}\n` +
+      `الدفع: ${payment}\n` +
+      `المصدر: ${getAdSource()}`;
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 12000);
+    const { fbp, fbc } = getFbParams();
+
+    let sheetSaveFailed = false;
+    const sheetUrl = "YOUR_GOOGLE_APPS_SCRIPT_URL";
+    if (!sheetUrl.startsWith('http')) {
+      sheetSaveFailed = true;
+      clearTimeout(timeoutId);
+    } else {
+      try {
+        await fetch(sheetUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({
+            token: "b3f1c9e6a4d8072e5f19c6b7a2d4e8f0163c9a7b5e2d1f4a8c6b0e3d7f9a2c5e",
+            timestamp: new Date().toLocaleString('ar-EG', { timeZone: 'Africa/Cairo' }),
+            orderId,
+            items: itemsText,
+            numItems: cartCount(),
+            subtotal,
+            shipping: shipping === null ? 'هيتم تحديدها لاحقاً' : shipping,
+            total,
+            name, phone, gov: govText, address, payment,
+            source: getAdSource(),
+            website: honeypot,
+            elapsedMs: Date.now() - __pageLoadedAt,
+            fbp, fbc,
+            pageUrl: window.location.href
+          }),
+          signal: controller.signal
+        });
+      } catch (e) {
+        sheetSaveFailed = true;
+      } finally {
+        clearTimeout(timeoutId);
+      }
+    }
+
+    if (sheetSaveFailed) {
+      window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(waMessage), '_blank');
+    }
+
+    sessionStorage.setItem('lastOrder', JSON.stringify({ id: orderId, items: cart, subtotal, shipping, total }));
+    clearCart();
+    window.location.href = 'thank-you.html?id=' + orderId;
+  }
+
+  ['fname','fphone','fgov','faddress'].forEach(id => {
+    const el = document.getElementById(id);
+    el.addEventListener('input', () => {
+      el.classList.remove('error');
+      document.getElementById(id + '-error').classList.remove('show');
+    });
+    el.addEventListener('change', () => {
+      el.classList.remove('error');
+      document.getElementById(id + '-error').classList.remove('show');
+    });
+  });
+</script>
+</body>
+</html>

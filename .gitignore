@@ -1,0 +1,6 @@
+# Backend script for the Google Sheets order integration — kept local only.
+# Not committed because it documents the shared secret token used to authenticate
+# with the Apps Script Web App (the token itself is unavoidably also embedded in
+# cart.html client-side since there's no real backend here, but there's no reason
+# to also publish the annotated source and business logic alongside it).
+apps-script.gs
