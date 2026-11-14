@@ -301,17 +301,21 @@ src="https://www.facebook.com/tr?id=2165511077625659&ev=PageView&noscript=1"
     const weightLabel = PRODUCT.weightLabels[weightVal];
     const unitPrice = currentUnitPrice();
     const item = {
-      category: PRODUCT.category, name: PRODUCT.name, unitPrice: unitPrice, qty: qty,
+      category: PRODUCT.category, name: PRODUCT.name, id: PRODUCT.id, unitPrice: unitPrice, qty: qty,
       options: { 'الوزن': weightLabel }
     };
     addToCart(item);
 
+    const eventId = generateEventId();
     if (typeof fbq !== 'undefined') {
       fbq('track', buyNow ? 'InitiateCheckout' : 'AddToCart', {
         value: unitPrice * qty, currency: 'EGP',
         content_name: PRODUCT.name, content_type: 'product', num_items: qty
-      });
+      }, { eventID: eventId });
     }
+    sendMetaTrackEvent(buyNow ? 'InitiateCheckout' : 'AddToCart', eventId, {
+      value: unitPrice * qty, currency: 'EGP', contentIds: [PRODUCT.id]
+    });
 
     if (buyNow) {
       window.location.href = 'cart.html';
