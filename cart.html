@@ -48,7 +48,7 @@ src="https://www.facebook.com/tr?id=1470703137971641&ev=PageView&noscript=1"
 <body>
 
 <div class="top-fixed">
-  <div class="announce-bar">منتجات طبيعية 100% من سيناء — دفع عند الاستلام</div>
+  <div class="announce-bar">منتجات من سيناء — توصيل القاهرة والجيزة · الدفع عند الاستلام</div>
   <nav>
     <div class="nav-side"></div>
     <a href="index.html" class="nav-logo logo-font">كنوز الفيروز</a>
@@ -100,14 +100,9 @@ src="https://www.facebook.com/tr?id=1470703137971641&ev=PageView&noscript=1"
         <label>المحافظة</label>
         <select id="fgov">
           <option value="">اختر المحافظة</option>
-          <option value="cairo">القاهرة</option><option value="giza">الجيزة</option><option value="alex">الإسكندرية</option><option value="beheira">البحيرة</option><option value="other">أخرى</option>
+          <option value="cairo">القاهرة</option><option value="giza">الجيزة</option>
         </select>
-        <div class="field-error-msg" id="fgov-error">من فضلك اختر المحافظة</div>
-      </div>
-      <div class="form-group" id="fgovOtherWrap" style="display:none;">
-        <label>اسم المحافظة</label>
-        <input type="text" id="fgovOther" placeholder="اكتب اسم محافظتك">
-        <div class="field-error-msg" id="fgovOther-error">من فضلك اكتب اسم المحافظة (حروف فقط)</div>
+        <div class="field-error-msg" id="fgov-error">للأسف التوصيل متاح للقاهرة والجيزة بس حالياً</div>
       </div>
       <div class="form-group">
         <label>العنوان بالتفصيل</label>
@@ -210,31 +205,20 @@ src="https://www.facebook.com/tr?id=1470703137971641&ev=PageView&noscript=1"
 
     const shipping = shippingFee(subtotal, govCode);
     if (shipping === null) {
-      shippingEl.textContent = 'هيتم تحديدها لاحقاً';
+      shippingEl.textContent = 'غير متاح';
       totalEl.textContent = formatEGP(subtotal);
-      note.textContent = 'هنأكدلك رسوم التوصيل لمحافظتك على واتساب بعد ما تبعت الطلب';
+      note.textContent = 'للأسف التوصيل متاح للقاهرة والجيزة بس حالياً';
       return;
     }
 
     const total = subtotal + shipping;
-    shippingEl.textContent = formatEGP(shipping);
+    shippingEl.textContent = shipping === 0 ? 'مجاني' : formatEGP(shipping);
     totalEl.textContent = formatEGP(total);
-    note.textContent = '';
+    note.textContent = shipping === 0 ? 'شحن مجاني للطلبات 1000 جنيه فأكتر 🎉' : '';
   }
 
   const govSelect = document.getElementById('fgov');
-  const govOtherWrap = document.getElementById('fgovOtherWrap');
-  const govOtherInput = document.getElementById('fgovOther');
-  govSelect.addEventListener('change', () => {
-    govOtherWrap.style.display = govSelect.value === 'other' ? 'block' : 'none';
-    updateSummary();
-  });
-  govOtherInput.addEventListener('input', () => {
-    const filtered = govOtherInput.value.replace(/[^A-Za-z\u0600-\u06FF\s]/g, '');
-    if (filtered !== govOtherInput.value) govOtherInput.value = filtered;
-    govOtherInput.classList.remove('error');
-    document.getElementById('fgovOther-error').classList.remove('show');
-  });
+  govSelect.addEventListener('change', updateSummary);
 
   renderCart();
 
@@ -265,19 +249,17 @@ src="https://www.facebook.com/tr?id=1470703137971641&ev=PageView&noscript=1"
     const name     = document.getElementById('fname').value.trim();
     const phone    = toWesternDigits(document.getElementById('fphone').value.trim());
     const govCode  = document.getElementById('fgov').value;
-    const govOther = document.getElementById('fgovOther').value.trim();
     const address  = document.getElementById('faddress').value.trim();
     const payment  = 'الدفع عند الاستلام';
     const honeypot = document.getElementById('fwebsite').value.trim();
 
-    ['fname','fphone','fgov','fgovOther','faddress'].forEach(id => {
+    ['fname','fphone','fgov','faddress'].forEach(id => {
       document.getElementById(id).classList.remove('error');
       document.getElementById(id + '-error').classList.remove('show');
     });
 
     const phoneClean = phone.replace(/[^0-9]/g, '');
     const phoneValid = /^01[0-2,5]\d{8}$/.test(phoneClean);
-    const govOtherValid = /^[A-Za-z\u0600-\u06FF\s]+$/.test(govOther);
 
     const fields = [
       { id: 'fname',    valid: !!name },
@@ -285,9 +267,6 @@ src="https://www.facebook.com/tr?id=1470703137971641&ev=PageView&noscript=1"
       { id: 'fgov',     valid: !!govCode },
       { id: 'faddress', valid: !!address }
     ];
-    if (govCode === 'other') {
-      fields.push({ id: 'fgovOther', valid: !!govOther && govOtherValid });
-    }
 
     let firstInvalid = null;
     fields.forEach(f => {
@@ -313,7 +292,7 @@ src="https://www.facebook.com/tr?id=1470703137971641&ev=PageView&noscript=1"
     const shipping = shippingFee(subtotal, govCode);
     const total = subtotal + (shipping || 0);
     const orderId = Math.floor(100000 + Math.random() * 900000);
-    const govText = govCode === 'other' ? govOther : document.getElementById('fgov').selectedOptions[0].text;
+    const govText = document.getElementById('fgov').selectedOptions[0].text;
 
     const contentIds = cart.map(i => i.id).filter(Boolean);
     if (typeof fbq !== 'undefined') {
@@ -324,7 +303,7 @@ src="https://www.facebook.com/tr?id=1470703137971641&ev=PageView&noscript=1"
       const opts = Object.values(i.options || {}).filter(Boolean).join('، ');
       return `- ${i.name}${opts ? ' (' + opts + ')' : ''} × ${i.qty} = ${(i.unitPrice * i.qty).toFixed(2)} جنيه`;
     }).join('\n');
-    const shippingLine = shipping === null ? 'هيتم تحديدها لاحقاً' : shipping.toFixed(2) + ' جنيه';
+    const shippingLine = shipping === null ? 'هيتم تحديدها لاحقاً' : (shipping === 0 ? 'مجاني' : shipping.toFixed(2) + ' جنيه');
 
     const waMessage =
       `طلب جديد #${orderId}\n\n` +
