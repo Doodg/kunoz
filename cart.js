@@ -5,8 +5,9 @@
 (function () {
   const CART_KEY = 'kunoz_cart_v1';
   window.WHATSAPP_NUMBER = '201042030926';
-  // رسوم توصيل ثابتة حسب المحافظة — لا يوجد شحن مجاني (كل الطلبات بتدفع رسوم توصيل)
-  window.SHIPPING_FEES = { cairo: 70, giza: 70, alex: 85, beheira: 85 };
+  // التوصيل للقاهرة والجيزة بس. شحن مجاني للطلبات اللي إجماليها 1000 جنيه أو أكتر.
+  window.SHIPPING_FEES = { cairo: 70, giza: 70 };
+  window.FREE_SHIPPING_THRESHOLD = 1000;
 
   function getCart() {
     try {
@@ -71,12 +72,12 @@
     return getCart().reduce((sum, i) => sum + i.qty * i.unitPrice, 0);
   }
 
-  // بترجع رقم (رسوم الشحن) لو المحافظة معروفة عندنا، أو null لو "أخرى"
-  // (يعني الرسوم لسه مش معروفة وهيتم تأكيدها مع العميل بعدين على واتساب).
-  // مفيش شحن مجاني خالص مهما كان حجم الطلب.
+  // بترجع رقم (رسوم الشحن) لو المحافظة معروفة عندنا (القاهرة/الجيزة بس)، أو null
+  // لو مش معروفة. شحن مجاني تلقائي للطلبات 1000 جنيه فأكتر.
   function shippingFee(subtotal, govCode) {
     if (subtotal <= 0) return 0;
     if (!(govCode in window.SHIPPING_FEES)) return null;
+    if (subtotal >= window.FREE_SHIPPING_THRESHOLD) return 0;
     return window.SHIPPING_FEES[govCode];
   }
 
