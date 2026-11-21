@@ -378,6 +378,27 @@ nav {
 }
 @keyframes waPulse { 0%,100% { box-shadow: 0 10px 30px rgba(37,211,102,0.4); } 50% { box-shadow: 0 10px 30px rgba(37,211,102,0.7), 0 0 0 8px rgba(37,211,102,0.12); } }
 
+/* ---------- Sticky mobile order bar (product/box pages) ---------- */
+.pdp-sticky-bar { display: none; }
+@media (max-width: 720px) {
+  body.has-pdp-sticky { padding-bottom: 78px; }
+  body.has-pdp-sticky .wa-float { bottom: 94px; }
+  .pdp-sticky-bar {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 150;
+    background: var(--black); border-top: 1px solid rgba(255,204,0,0.25);
+    padding: 10px 16px; padding-bottom: calc(10px + env(safe-area-inset-bottom));
+    box-shadow: 0 -8px 24px rgba(0,0,0,0.35);
+  }
+  .pdp-sticky-bar .pdp-sticky-info { display: flex; flex-direction: column; line-height: 1.3; overflow: hidden; }
+  .pdp-sticky-bar .pdp-sticky-name { font-size: 0.76rem; color: rgba(243,240,232,0.65); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pdp-sticky-bar .pdp-sticky-price { font-size: 1.05rem; font-weight: 800; color: var(--gold); }
+  .pdp-sticky-bar button { padding: 10px 22px; font-size: 0.88rem; white-space: nowrap; flex-shrink: 0; }
+}
+
+/* ---------- Delivery fee line under PDP price ---------- */
+.pdp-delivery-note { font-size: 0.85rem; color: rgba(243,240,232,0.6); margin: 6px 0 14px; }
+
 /* ---------- Footer ---------- */
 .site-footer { background: var(--black); color: rgba(243,240,232,0.55); text-align: center; padding: 40px 24px 30px; }
 .site-footer .footer-logo { font-family: 'Aref Ruqaa', serif; font-size: 1.3rem; color: var(--gold); margin-bottom: 14px; }

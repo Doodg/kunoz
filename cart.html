@@ -32,11 +32,11 @@ src="https://www.facebook.com/tr?id=1470703137971641&ev=PageView&noscript=1"
 <meta property="og:title" content="السلة والدفع – كنوز الفيروز">
 <meta property="og:description" content="راجع سلة مشترياتك من كنوز الفيروز وأتمّ طلبك — عرض المنتجات والكمية والسعر، رسوم الشحن، والإجمالي.">
 <meta property="og:url" content="https://kunoz-elfayrouz.com/cart.html">
-<meta property="og:image" content="https://kunoz-elfayrouz.com/images/olive-oil.jpg">
+<meta property="og:image" content="https://kunoz-elfayrouz.com/images/olive-oil.webp">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="السلة والدفع – كنوز الفيروز">
 <meta name="twitter:description" content="راجع سلة مشترياتك من كنوز الفيروز وأتمّ طلبك — عرض المنتجات والكمية والسعر، رسوم الشحن، والإجمالي.">
-<meta name="twitter:image" content="https://kunoz-elfayrouz.com/images/olive-oil.jpg">
+<meta name="twitter:image" content="https://kunoz-elfayrouz.com/images/olive-oil.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://connect.facebook.net">
@@ -68,6 +68,12 @@ src="https://www.facebook.com/tr?id=1470703137971641&ev=PageView&noscript=1"
     <div style="font-size:3.2rem; margin-bottom:16px;">🛒</div>
     <p style="color:var(--text-soft); margin-bottom:26px;">السلة فاضية دلوقتي — تصفح منتجاتنا وأضف اللي يعجبك</p>
     <a href="index.html" class="btn btn-gold">تصفح المنتجات</a>
+  </div>
+
+  <div id="pendingOrderBanner" style="display:none; margin-bottom:18px; padding:14px; background:rgba(255,204,0,0.08); border:1px solid rgba(255,204,0,0.35); border-radius:10px; text-align:center;">
+    <p style="margin:0 0 8px;">عندك طلب سابق لم يتأكد إرساله بنجاح.</p>
+    <button type="button" id="pendingOrderRetryBtn" class="btn btn-gold" style="padding:8px 18px; font-size:0.85rem;">إعادة المحاولة</button>
+    <button type="button" id="pendingOrderDismissBtn" style="padding:8px 18px; font-size:0.85rem; background:none; border:1px solid var(--text-soft); color:var(--text-soft); border-radius:8px; margin-right:8px; cursor:pointer;">تجاهل</button>
   </div>
 
   <div id="cartContent">
@@ -117,6 +123,10 @@ src="https://www.facebook.com/tr?id=1470703137971641&ev=PageView&noscript=1"
         </div>
       </div>
       <button class="btn btn-gold btn-block" id="submitBtn" onclick="submitCheckout()">تأكيد الطلب</button>
+      <div id="sendErrorBanner" style="display:none; margin-top:14px; padding:14px; background:rgba(200,40,40,0.08); border:1px solid rgba(200,40,40,0.3); border-radius:10px; text-align:center;">
+        <p style="margin:0 0 8px;">حصلت مشكلة في إرسال طلبك، اضغط هنا وابعته على واتساب</p>
+        <a href="#" id="sendErrorWaLink" target="_blank" class="btn btn-gold" style="display:inline-block; padding:8px 18px; font-size:0.85rem;">ابعت الطلب على واتساب</a>
+      </div>
       <p class="form-note">بياناتك آمنة — الدفع عند الاستلام فقط</p>
     </div>
   </div>
@@ -285,6 +295,7 @@ src="https://www.facebook.com/tr?id=1470703137971641&ev=PageView&noscript=1"
       return;
     }
 
+    hideSendError();
     const btn = document.getElementById('submitBtn');
     btn.disabled = true; btn.textContent = 'جارٍ الإرسال...';
 
@@ -318,56 +329,175 @@ src="https://www.facebook.com/tr?id=1470703137971641&ev=PageView&noscript=1"
       `الدفع: ${payment}\n` +
       `المصدر: ${getAdSource()}`;
 
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 12000);
     const { fbp, fbc } = getFbParams();
+    const orderPayload = {
+      token: ORDER_TOKEN,
+      timestamp: new Date().toLocaleString('ar-EG', { timeZone: 'Africa/Cairo' }),
+      orderId,
+      items: itemsText,
+      numItems: cartCount(),
+      subtotal,
+      shipping: shipping === null ? 'هيتم تحديدها لاحقاً' : shipping,
+      total,
+      name, phone, gov: govText, address, payment,
+      source: getAdSource(),
+      website: honeypot,
+      elapsedMs: Date.now() - __pageLoadedAt,
+      fbp, fbc,
+      pageUrl: window.location.href,
+      userAgent: navigator.userAgent,
+      contentIds
+    };
 
-    let sheetSaveFailed = false;
-    const sheetUrl = "https://script.google.com/macros/s/AKfycbwQUvlrFS3UZPyess2u6Ol9Ng1T9N-Vc3IuAhnSRwbyj7iNgNnCl5kZNkodnpIBgliPZw/exec";
-    if (!sheetUrl.startsWith('http')) {
-      sheetSaveFailed = true;
-      clearTimeout(timeoutId);
-    } else {
-      try {
-        await fetch(sheetUrl, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify({
-            token: "b3f1c9e6a4d8072e5f19c6b7a2d4e8f0163c9a7b5e2d1f4a8c6b0e3d7f9a2c5e",
-            timestamp: new Date().toLocaleString('ar-EG', { timeZone: 'Africa/Cairo' }),
-            orderId,
-            items: itemsText,
-            numItems: cartCount(),
-            subtotal,
-            shipping: shipping === null ? 'هيتم تحديدها لاحقاً' : shipping,
-            total,
-            name, phone, gov: govText, address, payment,
-            source: getAdSource(),
-            website: honeypot,
-            elapsedMs: Date.now() - __pageLoadedAt,
-            fbp, fbc,
-            pageUrl: window.location.href,
-            userAgent: navigator.userAgent,
-            contentIds
-          }),
-          signal: controller.signal
-        });
-      } catch (e) {
-        sheetSaveFailed = true;
-      } finally {
-        clearTimeout(timeoutId);
-      }
+    // نسخة احتياطية محلية قبل أي محاولة إرسال، عشان لو التبويب اتقفل أو النت قطع
+    // فجأة في النص، الطلب يفضل محفوظ وتقدر تكمله لما ترجع لنفس الصفحة.
+    savePendingOrder(orderId, orderPayload, waMessage);
+
+    const result = await sendOrderWithRetry(orderPayload);
+
+    if (result.ok) {
+      clearPendingOrder(orderId);
+      sessionStorage.setItem('lastOrder', JSON.stringify({ id: result.orderId || orderId, items: cart, subtotal, shipping, total }));
+      clearCart();
+      window.location.href = 'thank-you.html?id=' + (result.orderId || orderId);
+      return;
     }
 
-    if (sheetSaveFailed) {
-      window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(waMessage), '_blank');
-    }
-
-    sessionStorage.setItem('lastOrder', JSON.stringify({ id: orderId, items: cart, subtotal, shipping, total }));
-    clearCart();
-    window.location.href = 'thank-you.html?id=' + orderId;
+    reportFailure(orderPayload, result.reason || 'unknown');
+    showSendError(waMessage);
+    btn.disabled = false; btn.textContent = 'تأكيد الطلب';
+    isSubmitting = false;
   }
+
+  // رابط ورمز الـ Apps Script بتاع تسجيل الأوردرات — نفس القيم القديمة، لسه لازمة
+  // تتبعت من المتصفح عشان مفيش باك إند حقيقي تاني (شوف ملاحظة الأمان في apps-script.gs).
+  const SHEET_URL = "https://script.google.com/macros/s/AKfycbwQUvlrFS3UZPyess2u6Ol9Ng1T9N-Vc3IuAhnSRwbyj7iNgNnCl5kZNkodnpIBgliPZw/exec";
+  const ORDER_TOKEN = "b3f1c9e6a4d8072e5f19c6b7a2d4e8f0163c9a7b5e2d1f4a8c6b0e3d7f9a2c5e";
+
+  function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
+
+  // بعت الأوردر مرة واحدة، وبقرا رد السيرفر الحقيقي (من غير no-cors) عشان نعرف
+  // فعلاً لو اتسجل أو لو السيرفر رفضه — ده هو الفرق الجوهري عن الكود القديم.
+  async function sendOrderOnce(payload, timeoutMs) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      const res = await fetch(SHEET_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload),
+        signal: controller.signal
+      });
+      const json = await res.json();
+      if (json && json.status === 'success') {
+        return { ok: true, orderId: json.orderId };
+      }
+      return { ok: false, reason: 'server_rejected: ' + JSON.stringify(json) };
+    } catch (e) {
+      return { ok: false, reason: 'network_error: ' + e.toString() };
+    } finally {
+      clearTimeout(timeoutId);
+    }
+  }
+
+  // لو المحاولة الأولى فشلت (تأخير، مشكلة شبكة مؤقتة...)، نعيد المحاولة بنفس بيانات
+  // الطلب (ونفس orderId) حتى 3 مرات، مع فاصل صغير بينهم. السيرفر نفسه عنده قفل منع
+  // تكرار بـ orderId، فمينفعش يتسجل الطلب مرتين لو إحدى المحاولات نجحت بالفعل.
+  async function sendOrderWithRetry(payload) {
+    const attempts = [20000, 20000, 20000];
+    let lastResult = { ok: false, reason: 'not_attempted' };
+    for (let i = 0; i < attempts.length; i++) {
+      lastResult = await sendOrderOnce(payload, attempts[i]);
+      if (lastResult.ok) return lastResult;
+      if (i < attempts.length - 1) await sleep(2000);
+    }
+    return lastResult;
+  }
+
+  // تسجيل محاولة فشلت في تبويب "طلبات فشلت" بالشيت — "best effort": لو السكريبت
+  // نفسه مش شغال خالص، الطلب ده مش هيوصل برضو، لكن بيغطي باقي حالات الفشل (رفض،
+  // تأخير شديد...) عشان نعرف نفس اليوم لو ده بيحصل تاني.
+  function reportFailure(payload, reason) {
+    try {
+      fetch(SHEET_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({
+          token: ORDER_TOKEN,
+          action: 'log_failure',
+          orderId: payload.orderId,
+          reason: reason,
+          name: payload.name,
+          phone: payload.phone,
+          total: payload.total
+        })
+      }).catch(function () {});
+    } catch (e) { /* best effort بس */ }
+  }
+
+  function savePendingOrder(orderId, payload, waMessage) {
+    try {
+      localStorage.setItem('kunoz_pending_order_' + orderId, JSON.stringify({ payload, waMessage }));
+    } catch (e) {}
+  }
+
+  function clearPendingOrder(orderId) {
+    try { localStorage.removeItem('kunoz_pending_order_' + orderId); } catch (e) {}
+  }
+
+  function showSendError(waMessage) {
+    const banner = document.getElementById('sendErrorBanner');
+    const link = document.getElementById('sendErrorWaLink');
+    link.href = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(waMessage);
+    banner.style.display = 'block';
+    banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function hideSendError() {
+    document.getElementById('sendErrorBanner').style.display = 'none';
+  }
+
+  // لو فيه طلب سابق فشل إرساله واتسجل محلياً بس (مثلاً النت قطع فجأة)، نعرضه للعميل
+  // أول ما يرجع لصفحة السلة، ونسيبه هو اللي يختار يعيد المحاولة أو يتجاهله.
+  function checkPendingOrders() {
+    try {
+      const keys = Object.keys(localStorage).filter(k => k.indexOf('kunoz_pending_order_') === 0);
+      if (!keys.length) return;
+      const raw = localStorage.getItem(keys[0]);
+      const pending = raw ? JSON.parse(raw) : null;
+      if (!pending) { localStorage.removeItem(keys[0]); return; }
+
+      const banner = document.getElementById('pendingOrderBanner');
+      banner.style.display = 'block';
+
+      document.getElementById('pendingOrderRetryBtn').onclick = async function () {
+        const retryBtn = this;
+        retryBtn.disabled = true; retryBtn.textContent = 'جارٍ الإرسال...';
+        const result = await sendOrderWithRetry(pending.payload);
+        if (result.ok) {
+          clearPendingOrder(pending.payload.orderId);
+          sessionStorage.setItem('lastOrder', JSON.stringify({
+            id: result.orderId || pending.payload.orderId,
+            items: getCart(), subtotal: pending.payload.subtotal,
+            shipping: pending.payload.shipping, total: pending.payload.total
+          }));
+          clearCart();
+          window.location.href = 'thank-you.html?id=' + (result.orderId || pending.payload.orderId);
+        } else {
+          banner.style.display = 'none';
+          reportFailure(pending.payload, result.reason || 'unknown');
+          showSendError(pending.waMessage);
+          retryBtn.disabled = false; retryBtn.textContent = 'إعادة المحاولة';
+        }
+      };
+      document.getElementById('pendingOrderDismissBtn').onclick = function () {
+        clearPendingOrder(pending.payload.orderId);
+        banner.style.display = 'none';
+      };
+    } catch (e) {}
+  }
+  checkPendingOrders();
 
   ['fname','fphone','fgov','faddress'].forEach(id => {
     const el = document.getElementById(id);
